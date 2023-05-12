@@ -1,3 +1,4 @@
+import Button from "./button";
 import IdKit from "./id-kit";
 export default function InstructionsComponent() {
   return (
@@ -8,6 +9,7 @@ export default function InstructionsComponent() {
         </h1>
       </header>
       <div>
+        <Button color="mainGreen">Teste</Button>
         <IdKit />
       </div>
     </div>
