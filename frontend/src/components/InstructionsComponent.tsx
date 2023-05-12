@@ -1,5 +1,6 @@
 import Button from "./button";
 import IdKit from "./id-kit";
+import { Input } from "./input";
 import Tag from "./tag";
 export default function InstructionsComponent() {
   return (
@@ -19,6 +20,7 @@ export default function InstructionsComponent() {
         <Tag color="green">I&apos;m a Tag</Tag>
         <Tag color="grey">I&apos;m a Tag</Tag>
         <Tag color="purple">I&apos;m a Tag</Tag>
+        <Input label="Email" color="green" />
         <IdKit />
       </div>
     </div>
