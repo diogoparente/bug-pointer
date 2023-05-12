@@ -21,7 +21,7 @@ const source_code_pro = Source_Code_Pro({
 });
 
 const { connectors } = getDefaultWallets({
-  appName: "NFT Renter dApp",
+  appName: "Bug Pointer",
   chains,
 });
 
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <MainLayout className={source_code_pro.variable + " font-sourceCodePro"}>
+        <MainLayout className={`${source_code_pro.variable} font-sourceCodePro`}>
           <Component {...pageProps} />
         </MainLayout>
       </RainbowKitProvider>

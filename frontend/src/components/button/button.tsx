@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color: "green" | "purple" | "gradient";
 }
 
-const Button = ({ children, color, ...rest }: ButtonProps) => {
+const Button = ({ children, color, className, ...rest }: ButtonProps) => {
   if (color === "gradient") {
     return (
       <button {...rest} className="rounded-xl bg-gradient-to-r from-mainPurple to-mainGreen p-[2px]">
@@ -24,7 +24,8 @@ const Button = ({ children, color, ...rest }: ButtonProps) => {
       className={cn(
         "rounded-xl border-2 px-6 py-4 text-2xl font-medium",
         color === "green" && "border-mainGreen bg-mainGreen/5 text-mainGreen",
-        color === "purple" && "border-mainPurple bg-mainPurple/5 text-mainPurple"
+        color === "purple" && "border-mainPurple bg-mainPurple/5 text-mainPurple",
+        className
       )}
     >
       {children}

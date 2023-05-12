@@ -16,5 +16,6 @@ module.exports = {
       },
     },
   },
+  safelist: ["flex-col", "flex-1", "min-h-screen"],
   plugins: [],
 };

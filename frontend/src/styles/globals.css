@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 body {
+  display: flex;
   min-height: 100vh;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom, #11141d, #1a1d26);
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }

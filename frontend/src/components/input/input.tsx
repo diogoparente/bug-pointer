@@ -2,11 +2,12 @@ import { cn } from "@/utils/utils";
 
 interface InputProps {
   label: string;
+  type?: "text" | "date";
   placeholder?: string;
   color: "green" | "purple";
 }
 
-const Input = ({ label, color, placeholder = "" }: InputProps) => (
+const Input = ({ type = "text", label, color, placeholder = "" }: InputProps) => (
   <div>
     <label
       htmlFor={label}
@@ -20,7 +21,7 @@ const Input = ({ label, color, placeholder = "" }: InputProps) => (
     </label>
     <div className="relative mt-0 rounded-md shadow-sm">
       <input
-        type="text"
+        type={type}
         name={label}
         id={label}
         className={cn(
@@ -28,7 +29,8 @@ const Input = ({ label, color, placeholder = "" }: InputProps) => (
           color === "green" &&
             "bg-mainGreen/10 text-mainGreen ring-mainGreen placeholder:text-mainGreen/50 focus:ring-mainGreen",
           color === "purple" &&
-            "bg-mainPurple/10 text-mainPurple ring-mainPurple placeholder:text-mainPurple/50 focus:ring-mainPurple"
+            "bg-mainPurple/10 text-mainPurple ring-mainPurple placeholder:text-mainPurple/50 focus:ring-mainPurple",
+          type === "date" && "w-fit"
         )}
         placeholder={placeholder}
       />

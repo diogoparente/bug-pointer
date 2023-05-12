@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ className, children }: MainLayoutProps) {
   return (
-    <div className={cn(className)}>
+    <div className={cn("flex min-h-screen flex-col items-center justify-start", className)}>
       <Navbar />
       {children}
     </div>
