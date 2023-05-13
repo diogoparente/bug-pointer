@@ -8,7 +8,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = ({ children, color, className, ...rest }: ButtonProps) => {
   if (color === "gradient") {
     return (
-      <button {...rest} className="rounded-xl bg-gradient-to-r from-mainPurple to-mainGreen p-[2px]">
+      <button
+        {...rest}
+        className="rounded-xl bg-gradient-to-r from-mainPurple to-mainGreen p-[2px] hover:opacity-90 hover:brightness-200"
+      >
         <div className="flex items-center justify-center rounded-[0.67rem] bg-[#11141d]/95 px-4 py-2">
           <p className="bg-gradient-to-r from-mainPurple to-mainGreen bg-clip-text font-medium text-transparent">
             {children}
@@ -22,7 +25,7 @@ const Button = ({ children, color, className, ...rest }: ButtonProps) => {
     <button
       {...rest}
       className={cn(
-        "rounded-xl border-2 px-4 py-2 font-medium",
+        "rounded-xl border-2 px-4 py-2 font-medium hover:opacity-90 hover:brightness-200",
         color === "green" && "border-mainGreen bg-mainGreen/5 text-mainGreen",
         color === "purple" && "border-mainPurple bg-mainPurple/5 text-mainPurple",
         className
