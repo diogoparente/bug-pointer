@@ -13,6 +13,7 @@ interface ContestInput {
   outOfScope: string;
   scope: string;
   relevantLinks: string;
+  bountyValue: string;
 }
 
 const defaultValues: ContestInput = {
@@ -23,6 +24,7 @@ const defaultValues: ContestInput = {
   scope: "scoped",
   outOfScope: "360 no scope",
   relevantLinks: "wikipedia.org",
+  bountyValue: "35000",
 };
 
 const CreateContest = () => {
@@ -78,9 +80,22 @@ const CreateContest = () => {
             register={register}
             name="relevantLinks"
           />
-          <Button color="purple" type="submit" className="mx-auto mt-6 w-fit">
-            Add Information
-          </Button>
+          <Input
+            color="purple"
+            type="text"
+            label="Bounty Value(USDC)"
+            className="flex-1"
+            register={register}
+            name="bountyValue"
+          />
+          <div className="flex w-full flex-col items-center justify-between">
+            <Paragraph className="mt-6 text-center text-base">
+              In order to create a contest you have to lock the bounty value
+            </Paragraph>
+            <Button color="purple" type="submit" className="mx-auto mt-4 w-fit">
+              Create Contest
+            </Button>
+          </div>
         </form>
       </main>
     </Page>
