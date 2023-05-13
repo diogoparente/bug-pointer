@@ -64,4 +64,82 @@ contract HackerPassTest is Test, InteractsWithWorldID {
         // check that only one NFT was minted.
         assertEq(hackerPass.balanceOf(address(this)), 1);
     }
+
+    function testCannotMintIfNotMember() public {
+        registerInvalidIdentity();
+
+        uint256 root = getRoot();
+        (uint256 nullifierHash, uint256[8] memory proof) = getProof(
+            address(this),
+            "bugpointer",
+            "hackerpass"
+        );
+
+        vm.expectRevert(abi.encodeWithSignature("InvalidProof()"));
+        hackerPass.verifyAndMint(
+            address(this),
+            root,
+            nullifierHash,
+            proof
+        );
+
+        // check that no NFT was minted.
+        assertEq(hackerPass.balanceOf(address(this)), 0);
+    }
+
+    function testCannotCallWithInvalidSignal() public {
+        registerIdentity();
+
+        (uint256 nullifierHash, uint256[8] memory proof) = getProof(
+            address(this),
+            "bugpointer",
+            "hackerpass"
+        );
+
+        uint256 root = getRoot();
+        vm.expectRevert(abi.encodeWithSignature("InvalidProof()"));
+        hackerPass.verifyAndMint(
+            address(0x01),
+            root,
+            nullifierHash,
+            proof
+        );
+
+        // check that no NFT was minted.
+        assertEq(hackerPass.balanceOf(address(this)), 0);
+    }
+
+
+    function testCannotCallWithInvalidProof() public {
+        registerIdentity();
+
+        (uint256 nullifierHash, uint256[8] memory proof) = getProof(
+            address(this),
+            "bugpointer",
+            "hackerpass"
+        );
+
+        // this changes the proof, invalidating it
+        proof[0] ^= 42;
+
+        uint256 root = getRoot();
+        vm.expectRevert(abi.encodeWithSignature("InvalidProof()"));
+        hackerPass.verifyAndMint(
+            address(0x01),
+            root,
+            nullifierHash,
+            proof
+        );
+
+        // extra checks here
+        assertEq(hackerPass.balanceOf(address(this)), 0);
+    }
+
+    function test_updateHackerXp() public {
+        
+    }
+
+    function test_updateHackerLevel() public {
+
+    }
 }

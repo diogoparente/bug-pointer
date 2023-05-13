@@ -9,6 +9,7 @@ contract HackerPass is ERC721 {
     using ByteHasher for bytes;
 
     error InvalidNullifier();
+    error InvalidXpAmount();
 
     // Worldcoin related.
     IWorldID internal immutable worldId;
@@ -33,7 +34,6 @@ contract HackerPass is ERC721 {
             .hashToField();
     }
 
-    // this function works as verification and mint function 
     function verifyAndMint(address signal, 
         uint256 root, 
         uint256 nullifierHash, 
@@ -57,6 +57,21 @@ contract HackerPass is ERC721 {
         _mint(signal, supply);
     }
     
-    // TODO: Update the level of the hacker based on the XP.
-    // this function can only be called by an active contest.
+    // TODO: test these function.
+    function updateHackerXp(address _hacker, uint256 _hackerXp) external {
+        // if (Contest.!deployedContests[msg.sender]) revert InvalidContest();
+        
+        if (_hackerXp != 0) revert InvalidXpAmount();
+
+        xpOfHacker[_hacker] += _hackerXp;
+
+        updateHackerLevel(_hacker, _hackerXp);
+    }
+
+    // TODO: test these function.
+    function updateHackerLevel(address _hacker, uint256 _hackerXp) private {
+        // TODO: math function to determine if the hacker has leveled up
+        // if the hacker has leveled up increment it's level.
+        // else does nothing.
+    }
 }
