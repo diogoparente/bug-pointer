@@ -52,4 +52,10 @@ const Contests = () => {
   );
 };
 
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};
+
 export default Contests;

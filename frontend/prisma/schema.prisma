@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Contest {
+  contestAddress         String                   @id
+  overview               String
+  scope                  String
+  outOfScope             String
+  links                  String
+  name                   String
+  startAt                DateTime
+  closeAt                DateTime
+  prize                  String
+  SubmittedVulnerability SubmittedVulnerability[]
+}
+
+model FilteredVulnerability {
+  id                     Int                    @id @default(autoincrement())
+  subVulnId              Int
+  name                   String
+  proofOfConcept         String
+  severity               String
+  SubmittedVulnerability SubmittedVulnerability @relation(fields: [subVulnId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model SubmittedVulnerability {
+  id                    Int                     @id @default(autoincrement())
+  contestAddress        String
+  name                  String
+  proofOfConcept        String
+  ownerAddress          String
+  FilteredVulnerability FilteredVulnerability[]
+  Contest               Contest                 @relation(fields: [contestAddress], references: [contestAddress], onDelete: NoAction, onUpdate: NoAction)
+}
