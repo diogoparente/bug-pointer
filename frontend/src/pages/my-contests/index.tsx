@@ -48,7 +48,7 @@ const Contests = () => {
         {contests.map((contest) => (
           <ContestCard contest={contest} key={contest.contestAddress} mode="sponsor" />
         ))}
-        <CustomLink type="button" color="purple" href="/create-contest">
+        <CustomLink type="button" size="large" color="purple" href="/create-contest">
           Publish New Contest
         </CustomLink>
       </main>

@@ -92,7 +92,7 @@ const CreateContest = () => {
             <Paragraph className="mt-6 text-center text-base">
               In order to create a contest you have to lock the bounty value
             </Paragraph>
-            <Button color="purple" type="submit" className="mx-auto mt-4 w-fit">
+            <Button color="purple" type="submit" size="large" className="mx-auto mt-4 w-fit">
               Create Contest
             </Button>
           </div>

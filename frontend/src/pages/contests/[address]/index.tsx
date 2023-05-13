@@ -40,7 +40,9 @@ const Contest = ({ contest = mock }: ContestProps) => {
             <CustomLink color="green" href={router.asPath + "/submit-finding"} type="button">
               Submit Finding
             </CustomLink>
-            <Button color="green">Apply as Judge</Button>
+            <Button color="green" size="small">
+              Apply as Judge
+            </Button>
           </div>
           <FilledText label="Overview" text={contest.overview} />
           <FilledText label="Scope" text={contest.scope} />

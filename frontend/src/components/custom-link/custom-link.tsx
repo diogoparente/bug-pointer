@@ -4,11 +4,12 @@ import Button from "../button";
 interface CustomLinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
   type?: "link" | "button";
   color?: "green" | "purple";
+  size?: "small" | "large";
   href: string;
   children: React.ReactNode;
 }
 
-function CustomLink({ type, href, children, color = "green", ...props }: CustomLinkProps) {
+function CustomLink({ type, href, children, color = "green", size = "small", ...props }: CustomLinkProps) {
   if (type === "link" || !type) {
     return (
       <NextLink {...props} href={href} passHref>
@@ -18,7 +19,9 @@ function CustomLink({ type, href, children, color = "green", ...props }: CustomL
   } else if (type === "button") {
     return (
       <NextLink {...props} href={href} passHref>
-        <Button color={color}>{children}</Button>
+        <Button size={size} color={color}>
+          {children}
+        </Button>
       </NextLink>
     );
   }
