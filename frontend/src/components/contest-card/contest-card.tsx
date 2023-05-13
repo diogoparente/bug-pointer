@@ -1,16 +1,22 @@
 import { DefaultBackground } from "../default-background";
 import { Paragraph, SubHeader } from "../text";
 import { DateDisplay } from "../date-display";
-import Button from "../button";
+import { cn } from "@/utils/utils";
+import CustomLink from "../custom-link";
 
 type ContestCardProps = {
   contest: Contest;
+  mode: "hacker" | "sponsor";
 };
 
-const ContestCard = ({ contest }: ContestCardProps) => (
+const ContestCard = ({ contest, mode }: ContestCardProps) => (
   <DefaultBackground className="mb-6 flex w-full flex-col items-start justify-between gap-8">
     <div className="flex w-full flex-row items-center justify-between">
-      <SubHeader className="text-left text-mainGreen">{contest.name}</SubHeader>
+      <SubHeader
+        className={cn("text-left", mode === "hacker" && "text-mainGreen", mode === "sponsor" && "text-mainPurple")}
+      >
+        {contest.name}
+      </SubHeader>
       <SubHeader className="text-right">{contest.prize}</SubHeader>
     </div>
     <Paragraph>{contest.overview.length > 200 ? contest.overview.slice(0, 200) + "..." : contest.overview}</Paragraph>
@@ -19,7 +25,15 @@ const ContestCard = ({ contest }: ContestCardProps) => (
         <DateDisplay date={contest.startAt} label="Start Date" />
         <DateDisplay date={contest.closeAt} label="End Date" />
       </div>
-      <Button color="green">More Details</Button>
+      {mode === "hacker" ? (
+        <CustomLink href={`/contests/${contest.contestAddress}`} type="button" color="green">
+          More Details
+        </CustomLink>
+      ) : (
+        <CustomLink href={""} type="button" color="purple">
+          See Results
+        </CustomLink>
+      )}
     </div>
   </DefaultBackground>
 );

@@ -2,7 +2,7 @@ import { SubHeader } from "@/components/text";
 import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
 
-const CurrentContests = () => {
+const Contests = () => {
   const contests: Contest[] = [
     {
       contestAddress: "0x123",
@@ -43,13 +43,13 @@ const CurrentContests = () => {
   return (
     <Page>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
-        <SubHeader className="mb-8 w-full text-left text-mainGreen">Current Contests</SubHeader>
+        <SubHeader className="mb-8 w-full text-left text-mainGreen">Contests</SubHeader>
         {contests.map((contest) => (
-          <ContestCard contest={contest} key={contest.contestAddress} />
+          <ContestCard contest={contest} key={contest.contestAddress} mode="hacker" />
         ))}
       </main>
     </Page>
   );
 };
 
-export default CurrentContests;
+export default Contests;
