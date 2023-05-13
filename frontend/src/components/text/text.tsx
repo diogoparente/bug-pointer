@@ -2,7 +2,7 @@ import { cn } from "@/utils/utils";
 import React from "react";
 
 const Header = ({ children, className }: DefaultProps) => (
-  <h1 className={cn("text-5xl font-semibold text-white", className)}>{children}</h1>
+  <h1 className={cn("text-4xl font-semibold text-white", className)}>{children}</h1>
 );
 
 const SubHeader = ({ children, className }: DefaultProps) => (
