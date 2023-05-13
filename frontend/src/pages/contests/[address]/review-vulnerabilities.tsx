@@ -4,7 +4,9 @@ import { DefaultBackground } from "@/components/default-background";
 import { Page } from "@/components/page";
 import * as Tabs from "@radix-ui/react-tabs";
 import { SubmittedVulnerabilityInfo } from "@/components/vulnerability-info";
+import { RegularLine } from "@/components/lines";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { DiscardedVulnerabilities } from "@/components/discarded-vulnerabilities";
 
 type ContestProps = {
   contest: Contest;
@@ -111,7 +113,11 @@ const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
               </div>
             </Tabs.Content>
             <Tabs.Content className="flex grow flex-col gap-8 rounded-b-md p-5 outline-none" value="tab2">
-              <p>Setting up</p>
+              <DiscardedVulnerabilities
+                submittedVulnerabilities={submittedVulnerabilities}
+                setSubmittedVulnerabilities={setSubmittedVulnerabilities}
+              />
+              <RegularLine />
             </Tabs.Content>
           </Tabs.Root>
         </DefaultBackground>
