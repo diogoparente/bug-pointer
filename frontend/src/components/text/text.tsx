@@ -1,4 +1,5 @@
 import { cn } from "@/utils/utils";
+import React from "react";
 
 const Header = ({ children, className }: DefaultProps) => (
   <h1 className={cn("text-6xl font-semibold text-white", className)}>{children}</h1>

@@ -21,7 +21,6 @@ const IdKit: React.FC = () => {
       onSuccess={onSuccess}
       handleVerify={handleProof}
       app_id="app_staging_61309e8182a36a339791554b6353570e"
-      // walletConnectProjectId="get_this_from_walletconnect_portal"
     >
       {({ open }) => (
         <div
