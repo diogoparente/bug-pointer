@@ -21,20 +21,20 @@ const CustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button color="gradient" onClick={openConnectModal}>
+                  <Button color="gradient" size="large" onClick={openConnectModal}>
                     Connect Wallet
                   </Button>
                 );
               }
               if (chain.unsupported) {
                 return (
-                  <Button color="gradient" onClick={openChainModal}>
+                  <Button color="gradient" size="small" onClick={openChainModal}>
                     Wrong network
                   </Button>
                 );
               }
               return (
-                <Button color="gradient" onClick={openAccountModal}>
+                <Button color="gradient" size="small" onClick={openAccountModal}>
                   {account.displayName}
                   {account.displayBalance ? ` (${account.displayBalance})` : ""}
                 </Button>

@@ -26,11 +26,11 @@ const ContestCard = ({ contest, mode }: ContestCardProps) => (
         <DateDisplay date={contest.closeAt} label="End Date" />
       </div>
       {mode === "hacker" ? (
-        <CustomLink href={`/contests/${contest.contestAddress}`} type="button" color="green">
+        <CustomLink href={`/contests/${contest.contestAddress}`} type="button" size="small" color="green">
           More Details
         </CustomLink>
       ) : (
-        <CustomLink href={`/my-contests/${contest.contestAddress}`} type="button" color="purple">
+        <CustomLink href={`/my-contests/${contest.contestAddress}`} type="button" size="small" color="purple">
           See Results
         </CustomLink>
       )}
