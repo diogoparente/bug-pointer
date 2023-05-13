@@ -1,6 +1,7 @@
 import { SubHeader } from "@/components/text";
 import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
+import { getAllContests } from "@/database/entities";
 
 const Contests = () => {
   const contests: Contest[] = [
@@ -53,6 +54,9 @@ const Contests = () => {
 };
 
 export const getServerSideProps = async () => {
+  const allContests = await getAllContests();
+  console.log({ allContests });
+
   return {
     props: {},
   };
