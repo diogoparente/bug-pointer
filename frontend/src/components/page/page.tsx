@@ -1,8 +1,8 @@
 import useAuthentication from "@/hooks/useAuthentication";
-import Navbar from "../navigation/navbar";
+import { Navbar } from "@/components/navbar";
 import { SubHeader } from "../text";
 import { cn } from "@/utils/utils";
-import { Source_Code_Pro } from "@next/font/google";
+import { Source_Code_Pro } from "next/font/google";
 
 const source_code_pro = Source_Code_Pro({
   subsets: ["latin"],
