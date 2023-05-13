@@ -8,11 +8,11 @@ const CreateBounty = () => {
       <main className="flex flex-1 flex-col items-center justify-center gap-20">
         <SubHeader>First Step</SubHeader>
         <Paragraph>
-          Add the basic information about your bounty. During the first two days of the bounty the judge will be
+          Add the basic information about your Contest. During the first two days of the Contest the judge will be
           selected
         </Paragraph>
         <div className="flex flex-row items-center justify-between">
-          <Input color="purple" type="text" label="Bounty Name" />
+          <Input color="purple" type="text" label="Contest Name" />
           <div className="flex flex-row items-center justify-between gap-8">
             <Input color="purple" type="date" label="Start Date" />
             <Input color="purple" type="date" label="End Date" />
