@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import useAuthentication from "@/hooks/useAuthentication";
 import { Navbar } from "@/components/navbar";
 import { SubHeader } from "../text";
 import { cn } from "@/utils/utils";
 import { Source_Code_Pro } from "next/font/google";
+import { useState, useEffect } from "react";
 
 const source_code_pro = Source_Code_Pro({
   subsets: ["latin"],
@@ -16,6 +18,11 @@ interface PageProps extends DefaultProps {
 
 function Page({ className, children, isMandatoryConnection = false }: PageProps) {
   const { isAuthed } = useAuthentication(isMandatoryConnection);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <div
@@ -26,13 +33,15 @@ function Page({ className, children, isMandatoryConnection = false }: PageProps)
       )}
     >
       <Navbar />
-      {isAuthed ? (
-        children
-      ) : (
-        <main className="flex flex-1 flex-col items-center justify-center">
-          <SubHeader className="text-center">You need to connect your wallet to continue</SubHeader>
-        </main>
-      )}
+      {!isMandatoryConnection || isMounted ? (
+        isAuthed ? (
+          children
+        ) : (
+          <main className="flex flex-1 flex-col items-center justify-center">
+            <SubHeader className="text-center">You need to connect your wallet to continue</SubHeader>
+          </main>
+        )
+      ) : null}
     </div>
   );
 }

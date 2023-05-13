@@ -1,11 +1,13 @@
 import { Paragraph, SubHeader } from "@/components/text";
 import { Input } from "@/components/input";
 import { Page } from "@/components/page";
+import { TextArea } from "@/components/text-area";
+import Button from "@/components/button";
 
 const CreateBounty = () => {
   return (
     <Page isMandatoryConnection>
-      <main className="flex flex-1 flex-col items-center justify-center gap-20">
+      <main className="flex flex-1 flex-col items-center justify-center gap-8 py-24">
         <SubHeader>First Step</SubHeader>
         <Paragraph>
           Add the basic information about your Contest. During the first two days of the Contest the judge will be
