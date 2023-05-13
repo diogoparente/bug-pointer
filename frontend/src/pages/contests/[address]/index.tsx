@@ -1,11 +1,10 @@
 import { DefaultBackground } from "@/components/default-background";
-import { Header, SubHeader } from "@/components/text";
 import { Page } from "@/components/page";
-import { DateDisplay } from "@/components/date-display";
 import Button from "@/components/button";
 import { FilledText } from "@/components/filled-text";
 import CustomLink from "@/components/custom-link";
 import { ContestHeader } from "@/components/contest-header";
+import { useRouter } from "next/router";
 
 type ContestProps = {
   contest: Contest;
@@ -29,24 +28,28 @@ const mock = {
   filteredVulnerabilities: [],
 };
 
-const Contest = ({ contest = mock }: ContestProps) => (
-  <Page>
-    <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
-      <DefaultBackground className="flex w-full flex-col gap-8">
-        <ContestHeader contest={contest} mode="hacker" />
-        <div className="flex flex-row justify-start gap-8">
-          <CustomLink color="green" href="/" type="button">
-            Submit Finding
-          </CustomLink>
-          <Button color="green">Apply as Judge</Button>
-        </div>
-        <FilledText label="Overview" text={contest.overview} />
-        <FilledText label="Scope" text={contest.scope} />
-        <FilledText label="Out of Scope" text={contest.outOfScope} />
-        <FilledText label="Links" text={contest.links} />
-      </DefaultBackground>
-    </main>
-  </Page>
-);
+const Contest = ({ contest = mock }: ContestProps) => {
+  const router = useRouter();
+
+  return (
+    <Page>
+      <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
+        <DefaultBackground className="flex w-full flex-col gap-8">
+          <ContestHeader contest={contest} mode="hacker" />
+          <div className="flex flex-row justify-start gap-8">
+            <CustomLink color="green" href={router.asPath + "/submit-finding"} type="button">
+              Submit Finding
+            </CustomLink>
+            <Button color="green">Apply as Judge</Button>
+          </div>
+          <FilledText label="Overview" text={contest.overview} />
+          <FilledText label="Scope" text={contest.scope} />
+          <FilledText label="Out of Scope" text={contest.outOfScope} />
+          <FilledText label="Links" text={contest.links} />
+        </DefaultBackground>
+      </main>
+    </Page>
+  );
+};
 
 export default Contest;
