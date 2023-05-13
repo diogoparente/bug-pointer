@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ConnectButton } from "../connect-button";
-import { FadingLine } from "../fading-line";
+import { FadingLine } from "../lines";
 import Image from "next/image";
 
 function Navbar() {

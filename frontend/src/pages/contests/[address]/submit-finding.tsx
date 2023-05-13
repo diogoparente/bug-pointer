@@ -102,7 +102,7 @@ const SubmitFinding = ({ contest = mock }: ContestProps) => {
               className="min-h-[14rem]"
               register={register}
             />
-            <Button color="green" type="submit" className="mx-auto w-fit">
+            <Button color="green" type="submit" size="large" className="mx-auto w-fit">
               Submit
             </Button>
           </form>
