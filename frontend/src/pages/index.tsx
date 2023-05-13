@@ -8,7 +8,7 @@ export default function Home() {
       <main className="flex flex-1 flex-col items-center justify-center gap-20">
         <Header className="px-32 text-center text-white">A sybil-resistant Contest platform</Header>
         <div className="flex flex-row items-center justify-center gap-16">
-          <CustomLink type="button" color="purple" className="text-xl" href={"/create-Contest"}>
+          <CustomLink type="button" color="purple" className="text-xl" href={"/create-contest"}>
             I&#39;m a Sponsor
           </CustomLink>
           <CustomLink type="button" color="green" className="text-xl" href={"/hacker-onboarding"}>
