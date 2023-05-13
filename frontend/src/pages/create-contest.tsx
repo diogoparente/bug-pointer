@@ -25,7 +25,7 @@ const defaultValues: ContestInput = {
   relevantLinks: "wikipedia.org",
 };
 
-const CreateBounty = () => {
+const CreateContest = () => {
   const { register, handleSubmit } = useForm<ContestInput>({ defaultValues });
 
   const onSubmitHandler = (values: ContestInput) => {
@@ -87,4 +87,4 @@ const CreateBounty = () => {
   );
 };
 
-export default CreateBounty;
+export default CreateContest;

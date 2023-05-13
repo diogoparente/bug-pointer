@@ -30,7 +30,7 @@ const ContestCard = ({ contest, mode }: ContestCardProps) => (
           More Details
         </CustomLink>
       ) : (
-        <CustomLink href={""} type="button" color="purple">
+        <CustomLink href={`/my-contests/${contest.contestAddress}`} type="button" color="purple">
           See Results
         </CustomLink>
       )}
