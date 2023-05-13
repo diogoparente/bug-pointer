@@ -7,6 +7,7 @@ import { SubmittedVulnerabilityInfo } from "@/components/vulnerability-info";
 import { RegularLine } from "@/components/lines";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { DiscardedVulnerabilities } from "@/components/discarded-vulnerabilities";
+import { FilteredVulnerabilityItem } from "@/components/filtered-vulnerability-item";
 
 type ContestProps = {
   contest: Contest;
@@ -113,6 +114,12 @@ const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
               </div>
             </Tabs.Content>
             <Tabs.Content className="flex grow flex-col gap-8 rounded-b-md p-5 outline-none" value="tab2">
+              <div className="flex flex-col gap-4">
+                {filteredVulnerabilities.map((vulnerability) => (
+                  <FilteredVulnerabilityItem vulnerability={vulnerability} key={vulnerability.id} />
+                ))}
+              </div>
+              <RegularLine />
               <DiscardedVulnerabilities
                 submittedVulnerabilities={submittedVulnerabilities}
                 setSubmittedVulnerabilities={setSubmittedVulnerabilities}
