@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@next/font": "^13.4.2",
     "@rainbow-me/rainbowkit": "^0.12.4",
     "@worldcoin/idkit": "^0.4.9",
     "clsx": "^1.2.1",
