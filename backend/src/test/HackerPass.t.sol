@@ -8,6 +8,9 @@ import {InteractsWithWorldID} from "./helpers/InteractsWithWorldID.sol";
 contract HackerPassTest is Test, InteractsWithWorldID {
     HackerPass internal hackerPass;
 
+    address user1 = address(1000);
+    address user2 = address(2000);
+
     function setUp() public {
         setUpWorldID();
 
@@ -15,38 +18,40 @@ contract HackerPassTest is Test, InteractsWithWorldID {
 
         vm.label(address(this), "Sender");
         vm.label(address(hackerPass), "Hacker Pass");
+        vm.label(user1, "user1");
+        vm.label(user2, "user2");
     }
 
     function testCanMint() public {
         registerIdentity(); // this simulates a World ID "verified" identity
 
         (uint256 nullifierHash, uint256[8] memory proof) = getProof(
-            address(this),
+            user1,
             "bugpointer",
             "hackerpass"
         );
         hackerPass.verifyAndMint(
-            address(this),
+            user1,
             getRoot(),
             nullifierHash,
             proof
         );
 
         // check if the Hacker Pass was minted.
-        assertEq(hackerPass.balanceOf(address(this)), 1);
+        assertEq(hackerPass.balanceOf(user1), 1);
     }
 
     function testCannotDoubleMint() public {
         registerIdentity();
 
         (uint256 nullifierHash, uint256[8] memory proof) = getProof(
-            address(this),
+            user1,
             "bugpointer",
             "hackerpass"
         );
 
         hackerPass.verifyAndMint(
-            address(this),
+            user1,
             getRoot(),
             nullifierHash,
             proof
@@ -55,14 +60,14 @@ contract HackerPassTest is Test, InteractsWithWorldID {
         uint256 root = getRoot();
         vm.expectRevert(HackerPass.InvalidNullifier.selector);
         hackerPass.verifyAndMint(
-            address(this),
+            user1,
             root,
             nullifierHash,
             proof
         );
 
         // check that only one NFT was minted.
-        assertEq(hackerPass.balanceOf(address(this)), 1);
+        assertEq(hackerPass.balanceOf(user1), 1);
     }
 
     function testCannotMintIfNotMember() public {
@@ -70,28 +75,28 @@ contract HackerPassTest is Test, InteractsWithWorldID {
 
         uint256 root = getRoot();
         (uint256 nullifierHash, uint256[8] memory proof) = getProof(
-            address(this),
+            user1,
             "bugpointer",
             "hackerpass"
         );
 
         vm.expectRevert(abi.encodeWithSignature("InvalidProof()"));
         hackerPass.verifyAndMint(
-            address(this),
+            user1,
             root,
             nullifierHash,
             proof
         );
 
         // check that no NFT was minted.
-        assertEq(hackerPass.balanceOf(address(this)), 0);
+        assertEq(hackerPass.balanceOf(user1), 0);
     }
 
     function testCannotCallWithInvalidSignal() public {
         registerIdentity();
 
         (uint256 nullifierHash, uint256[8] memory proof) = getProof(
-            address(this),
+            user1,
             "bugpointer",
             "hackerpass"
         );
@@ -106,7 +111,7 @@ contract HackerPassTest is Test, InteractsWithWorldID {
         );
 
         // check that no NFT was minted.
-        assertEq(hackerPass.balanceOf(address(this)), 0);
+        assertEq(hackerPass.balanceOf(user1), 0);
     }
 
 
@@ -114,7 +119,7 @@ contract HackerPassTest is Test, InteractsWithWorldID {
         registerIdentity();
 
         (uint256 nullifierHash, uint256[8] memory proof) = getProof(
-            address(this),
+            user1,
             "bugpointer",
             "hackerpass"
         );
@@ -132,14 +137,57 @@ contract HackerPassTest is Test, InteractsWithWorldID {
         );
 
         // extra checks here
-        assertEq(hackerPass.balanceOf(address(this)), 0);
+        assertEq(hackerPass.balanceOf(user1), 0);
     }
 
-    function test_updateHackerXp() public {
-        
+    function testCannotTransferHackerPass() public {
+        registerIdentity(); // this simulates a World ID "verified" identity
+
+        (uint256 nullifierHash, uint256[8] memory proof) = getProof(
+            user1,
+            "bugpointer",
+            "hackerpass"
+        );
+        hackerPass.verifyAndMint(
+            user1,
+            getRoot(),
+            nullifierHash,
+            proof
+        );
+
+        // check if the Hacker Pass was minted.
+        assertEq(hackerPass.balanceOf(user1), 1);
+
+        vm.startPrank(address(this));
+        vm.expectRevert();
+        hackerPass.transferFrom(user1, user2, 1);
+        vm.stopPrank();
     }
 
-    function test_updateHackerLevel() public {
+    function testUpdateHackerXp() public {
+        registerIdentity(); // this simulates a World ID "verified" identity
 
+        (uint256 nullifierHash, uint256[8] memory proof) = getProof(
+            user1,
+            "bugpointer",
+            "hackerpass"
+        );
+        hackerPass.verifyAndMint(
+            user1,
+            getRoot(),
+            nullifierHash,
+            proof
+        );
+
+        // check if the Hacker Pass was minted.
+        assertEq(hackerPass.balanceOf(user1), 1);
+
+        hackerPass.updateHackerXp(user1, 4000);
+
+        assertEq(hackerPass.xpOfHacker(user1), 4000);
+        assertEq(hackerPass.levelOfHacker(user1), 3);
+
+        uint256 tokenId = hackerPass.tokenIdOfHacker(user1);
+        assertEq(hackerPass.tokenURI(tokenId), "ipfs://QmabkMt2mKsnWwTgJCQtEbkjTobENpQZFEwvTQhwQ78hKk/HackerPass3.json");
     }
 }

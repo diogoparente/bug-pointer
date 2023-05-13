@@ -1,6 +1,6 @@
 cache/
 out/
+lib/
 remappings.txt
 node_modules
 .env
-lib

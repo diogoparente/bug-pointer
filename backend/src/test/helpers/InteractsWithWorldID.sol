@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-import {Vm} from "forge-std/Vm.sol";
+import {Vm} from "../../../lib/forge-std/src/Vm.sol";
 import {IWorldID} from "../../interfaces/IWorldID.sol";
-import {Semaphore} from "world-id-contracts/Semaphore.sol";
+import {Semaphore} from "../../../lib/world-id-contracts/src/Semaphore.sol";
 import {TypeConverter} from "./TypeConverter.sol";
 
 contract InteractsWithWorldID {
