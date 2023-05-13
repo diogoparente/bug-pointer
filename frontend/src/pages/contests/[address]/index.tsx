@@ -5,6 +5,7 @@ import { DateDisplay } from "@/components/date-display";
 import Button from "@/components/button";
 import { FilledText } from "@/components/filled-text";
 import CustomLink from "@/components/custom-link";
+import { ContestHeader } from "@/components/contest-header";
 
 type ContestProps = {
   contest: Contest;
@@ -32,14 +33,7 @@ const Contest = ({ contest = mock }: ContestProps) => (
   <Page>
     <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
       <DefaultBackground className="flex w-full flex-col gap-8">
-        <div className="flex w-full flex-row items-center justify-between">
-          <Header className="text-mainGreen">{contest.name}</Header>
-          <div className="flex flex-row items-center justify-start gap-8">
-            <DateDisplay date={contest.startAt} label="Start Date" />
-            <DateDisplay date={contest.closeAt} label="End Date" />
-          </div>
-        </div>
-        <SubHeader>{`Total Prize: ${mock.prize}`}</SubHeader>
+        <ContestHeader contest={contest} mode="hacker" />
         <div className="flex flex-row justify-start gap-8">
           <CustomLink color="green" href="/" type="button">
             Submit Finding
