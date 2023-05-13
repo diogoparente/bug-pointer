@@ -22,6 +22,7 @@ function CustomLink({ type, href, children, color = "green", ...props }: CustomL
       </NextLink>
     );
   }
+  return <></>;
 }
 
 export { CustomLink };
