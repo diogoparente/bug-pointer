@@ -4,22 +4,33 @@ pragma solidity ^0.8.13;
 import {Test} from "../../lib/forge-std/src/Test.sol";
 import {HackerPass} from "../HackerPass.sol";
 import {InteractsWithWorldID} from "./helpers/InteractsWithWorldID.sol";
+import {ContestFactory} from "../ContestFactory.sol";
+import {Contest} from "../Contest.sol";
+import {IERC20} from "../../lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 
 contract HackerPassTest is Test, InteractsWithWorldID {
     HackerPass internal hackerPass;
+    ContestFactory internal factory;
+    Contest internal contest;
 
     address user1 = address(1000);
     address user2 = address(2000);
+    address sponsor = address(3000);
+    address USDC_ADDR = 0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747;
+
+    uint256 USDC_AMOUNT = 250 * 10 ** 6;
 
     function setUp() public {
         setUpWorldID();
 
         hackerPass = new HackerPass(worldID, "bugpointer", "hackerpass");
+        factory = new ContestFactory(address(hackerPass));
 
         vm.label(address(this), "Sender");
         vm.label(address(hackerPass), "Hacker Pass");
         vm.label(user1, "user1");
         vm.label(user2, "user2");
+        vm.label(sponsor, "sponsor");
     }
 
     function testCanMint() public {
@@ -179,10 +190,11 @@ contract HackerPassTest is Test, InteractsWithWorldID {
             proof
         );
 
-        // check if the Hacker Pass was minted.
         assertEq(hackerPass.balanceOf(user1), 1);
 
-        hackerPass.updateHackerXp(user1, 4000);
+        vm.startPrank(address(contest)); // TODO: THIS TEST FAILS
+        hackerPass.updateHackerXp(user1, address(factory), 4000);
+        vm.stopPrank();
 
         assertEq(hackerPass.xpOfHacker(user1), 4000);
         assertEq(hackerPass.levelOfHacker(user1), 3);
