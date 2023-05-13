@@ -1,4 +1,5 @@
 import CustomLink from "@/components/custom-link";
+import { NftCard } from "@/components/nft-card/nft-card";
 import { Page } from "@/components/page";
 import { Header } from "@/components/text";
 
@@ -14,6 +15,8 @@ export default function Home() {
           <CustomLink type="button" color="green" className="text-xl" size="large" href={"/hacker-onboarding"}>
             I&#39;m a Hacker
           </CustomLink>
+
+          <NftCard />
         </div>
       </main>
     </Page>
