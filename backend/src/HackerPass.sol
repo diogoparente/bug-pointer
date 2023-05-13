@@ -4,8 +4,9 @@ pragma solidity ^0.8.13;
 import {ByteHasher} from "./helpers/ByteHasher.sol";
 import {IWorldID} from "./interfaces/IWorldID.sol";
 import {ERC721} from "../lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
-import {Counters} from "../lib/openzeppelin-contracts/contracts/utils/Counters.sol";
 import {ERC721URIStorage} from "../lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import {Counters} from "../lib/openzeppelin-contracts/contracts/utils/Counters.sol";
+import {ContestFactory} from "./ContestFactory.sol";
 
 contract HackerPass is ERC721, ERC721URIStorage {
     using ByteHasher for bytes;
@@ -16,6 +17,7 @@ contract HackerPass is ERC721, ERC721URIStorage {
     error CannotTransferHackerPass();
     error MaxLevelReached();
     error DoesNotHaveHackerPass();
+    error InvalidContest();
 
     // Worldcoin related.
     IWorldID internal immutable worldId;
@@ -83,9 +85,8 @@ contract HackerPass is ERC721, ERC721URIStorage {
         _setTokenURI(tokenId, IpfsUri[0]);
     }
     
-    function updateHackerXp(address _hacker, uint256 _earnedXp) public {
-        // TODO: if (Contest.!deployedContests[msg.sender]) revert InvalidContest();
-        
+    function updateHackerXp(address _hacker, address _factory,uint256 _earnedXp) public {
+        if (!ContestFactory(_factory).deployedContests(msg.sender)) revert InvalidContest();
         if (_earnedXp == 0) revert InvalidXpAmount();
 
         xpOfHacker[_hacker] += _earnedXp;
@@ -113,7 +114,7 @@ contract HackerPass is ERC721, ERC721URIStorage {
         }
 
         uint256 tokenId = tokenIdOfHacker[_hacker];
-        if(tokenId == 0) revert DoesNotHaveHackerPass(); // FALHA ESTE CHECK
+        if(tokenId == 0) revert DoesNotHaveHackerPass(); 
 
         levelOfHacker[_hacker] = newLevel;
         string memory newUri = IpfsUri[newLevel];
