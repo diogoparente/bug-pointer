@@ -5,10 +5,6 @@ import Tag from "../tag";
 import { SubHeader } from "../text";
 import { SetStateAction } from "react";
 
-type ExtendedSubmittedVulnerability = SubmittedVulnerability & {
-  status: "Reviewed" | "Discarded" | "Pending";
-};
-
 interface DiscardedVulnerabilitiesProps {
   submittedVulnerabilities: ExtendedSubmittedVulnerability[];
   setSubmittedVulnerabilities: React.Dispatch<SetStateAction<ExtendedSubmittedVulnerability[]>>;
@@ -29,7 +25,10 @@ const DiscardedVulnerabilitiesManager = ({
   };
 
   const handleSaveVulnerabilities = () => {
-    setSubmittedVulnerabilities(submittedVulnerabilitiesAux);
+    setSubmittedVulnerabilities([
+      ...submittedVulnerabilitiesAux,
+      ...submittedVulnerabilities.filter((vul) => vul.status === "Reviewed"),
+    ]);
   };
 
   return (
@@ -61,7 +60,7 @@ const DiscardedVulnerabilities = ({
   return (
     <div>
       <div className="mb-2 flex w-full flex-row justify-between">
-        <SubHeader>Discarded Findings</SubHeader>
+        <SubHeader>Discarded Vulnerabilities</SubHeader>
         <Dialog.Root>
           <Dialog.Trigger asChild>
             <Button size="small" color="green">

@@ -9,12 +9,20 @@ type SubmittedVulnerability = {
   ownerAddress: string;
 };
 
+type SeverityDegrees = "Critical" | "High" | "Medium" | "Low";
+
 type FilteredVulnerability = {
   id: string;
   name: string;
   proofOfConcept: string;
-  severity: "Critical" | "High" | "Medium" | "Low";
+  severity: SeverityDegrees;
   associatedVulnerabilities: SubmittedVulnerability[];
+};
+
+type VulnerabilityStatus = "Reviewed" | "Discarded" | "Pending";
+
+type ExtendedSubmittedVulnerability = SubmittedVulnerability & {
+  status: VulnerabilityStatus;
 };
 
 type Contest = {

@@ -5,9 +5,10 @@ import { Page } from "@/components/page";
 import * as Tabs from "@radix-ui/react-tabs";
 import { SubmittedVulnerabilityInfo } from "@/components/vulnerability-info";
 import { RegularLine } from "@/components/lines";
-import { SubmitHandler, useForm } from "react-hook-form";
+import Button from "@/components/button";
 import { DiscardedVulnerabilities } from "@/components/discarded-vulnerabilities";
 import { FilteredVulnerabilityItem } from "@/components/filtered-vulnerability-item";
+import { CreateFilteredVulnerability } from "@/components/create-filtered-vulnerability";
 
 type ContestProps = {
   contest: Contest;
@@ -55,20 +56,6 @@ const mock = {
   filteredVulnerabilities: [],
 };
 
-type ExtendedSubmittedVulnerability = SubmittedVulnerability & {
-  status: "Reviewed" | "Discarded" | "Pending";
-};
-
-interface FilteredBugInput {
-  name: string;
-  proofOfConcept: string;
-}
-
-const defaultValues: FilteredBugInput = {
-  name: "",
-  proofOfConcept: "",
-};
-
 const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
   const [submittedVulnerabilities, setSubmittedVulnerabilities] = useState<ExtendedSubmittedVulnerability[]>(
     contest.submittedVulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" }))
@@ -76,27 +63,29 @@ const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
 
   const [filteredVulnerabilities, setFilteredVulnerabilities] = useState<FilteredVulnerability[]>([]);
 
-  const { register, handleSubmit } = useForm<FilteredBugInput>({ defaultValues });
-
-  const onSubmitHandler = (values: FilteredBugInput) => {
-    //Call backend here
-  };
-
   return (
     <Page isMandatoryConnection>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
         <DefaultBackground className="flex w-full flex-col gap-8">
           <ContestHeader contest={contest} mode="hacker" />
+          <Button
+            color="green"
+            size="large"
+            className="mx-auto w-fit"
+            disabled={submittedVulnerabilities.filter((vul) => vul.status === "Pending").length !== 0}
+          >
+            Submit Review
+          </Button>
           <Tabs.Root className="flex w-full flex-col" defaultValue="tab1">
             <Tabs.List className="flex w-full flex-row justify-center gap-32">
               <Tabs.Trigger
-                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
+                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
                 value="tab1"
               >
                 Submitted Vulnerabilities
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
+                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
                 value="tab2"
               >
                 Reviewed Vulnerabilities
@@ -119,12 +108,17 @@ const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
                   <FilteredVulnerabilityItem vulnerability={vulnerability} key={vulnerability.id} />
                 ))}
               </div>
-              <RegularLine />
+              {filteredVulnerabilities.length > 0 && <RegularLine />}
               <DiscardedVulnerabilities
                 submittedVulnerabilities={submittedVulnerabilities}
                 setSubmittedVulnerabilities={setSubmittedVulnerabilities}
               />
               <RegularLine />
+              <CreateFilteredVulnerability
+                submittedVulnerabilities={submittedVulnerabilities}
+                setSubmittedVulnerabilities={setSubmittedVulnerabilities}
+                setFilteredVulnerabilities={setFilteredVulnerabilities}
+              />
             </Tabs.Content>
           </Tabs.Root>
         </DefaultBackground>
