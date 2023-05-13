@@ -20,7 +20,8 @@ function Page({ className, children, isMandatoryConnection = false }: PageProps)
   return (
     <div
       className={cn(
-        `flex min-h-screen w-screen flex-col items-center justify-start ${source_code_pro.variable} font-sourceCodePro`,
+        // eslint-disable-next-line max-len
+        `flex min-h-screen w-screen flex-col items-center justify-start ${source_code_pro.variable} font-sourceCodePro text-white`,
         className
       )}
     >

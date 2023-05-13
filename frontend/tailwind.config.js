@@ -11,6 +11,8 @@ module.exports = {
       colors: {
         mainGreen: "#22C893",
         mainPurple: "#9054F5",
+        backgroundGrey: "#181B23",
+        highlightGrey: "#2F3239",
       },
       fontFamily: {
         sourceCodePro: ["var(--font-source-code-pro)"],

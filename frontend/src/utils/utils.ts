@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 const nrCorrector = (num: number) => {
-  return num < 10 ? `0${num}` : num;
+  return num < 10 ? `0${num}` : num.toString();
 };
 
 export const dateFormater = (epochs?: string) => {
