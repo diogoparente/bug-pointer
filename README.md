@@ -87,5 +87,3 @@ All the technical docs for the Wordcoin SDK, World ID Protocol, examples, guides
     </picture>
   </p>
 </a>
-
-<!-- WORLD-ID-SHARED-README-TAG:END -->
