@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./nft-card.module.css";
 
 interface NftCardProps {

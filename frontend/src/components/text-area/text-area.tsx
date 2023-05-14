@@ -1,5 +1,5 @@
 import { cn } from "@/utils/utils";
-import { TextareaHTMLAttributes, useRef } from "react";
+import { TextareaHTMLAttributes } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
