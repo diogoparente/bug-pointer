@@ -24,9 +24,9 @@ const Contest = ({ contest }: ContestProps) => {
             <CustomLink color="green" href={router.asPath + "/submit-vulnerability"} type="button">
               Submit Vulnerability
             </CustomLink>
-            <Button color="green" size="small">
+            {/* <Button color="green" size="small">
               Apply as Judge
-            </Button>
+            </Button> */}
             <CustomLink color="green" href={router.asPath + "/review-vulnerabilities"} type="button">
               Review Vulnerability
             </CustomLink>
