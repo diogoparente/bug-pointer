@@ -3,43 +3,7 @@ import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
 import { getAllContests } from "@/database/entities";
 
-const Contests = () => {
-  const contests: Contest[] = [
-    {
-      contestAddress: "0x123",
-      name: "Ethereum Contest",
-      overview:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      scope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      outOfScope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      links:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      prize: "35000 USD",
-      startAt: "1683986458000",
-      closeAt: "1687999958000",
-      submittedVulnerabilities: [],
-      filteredVulnerabilities: [],
-    },
-    {
-      contestAddress: "0x123",
-      name: "Ethereum Contest 2",
-      overview:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      scope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      outOfScope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      links:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      prize: "40000 USD",
-      startAt: "1679986458000",
-      closeAt: "1687129958000",
-      submittedVulnerabilities: [],
-      filteredVulnerabilities: [],
-    },
-  ];
+const Contests = ({contests}: {contests:Contest[]}) => {
 
   return (
     <Page>
@@ -54,11 +18,13 @@ const Contests = () => {
 };
 
 export const getServerSideProps = async () => {
-  const allContests = await getAllContests();
-  console.log({ allContests });
+  const contests = await getAllContests();
+  console.log({ contests });
 
   return {
-    props: {},
+    props: {
+      contests
+    },
   };
 };
 

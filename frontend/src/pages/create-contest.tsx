@@ -5,33 +5,24 @@ import { TextArea } from "@/components/text-area";
 import Button from "@/components/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-interface ContestInput {
-  contestName: string;
-  startDate: string;
-  endDate: string;
-  overview: string;
-  outOfScope: string;
-  scope: string;
-  relevantLinks: string;
-  bountyValue: string;
-}
-
-const defaultValues: ContestInput = {
-  contestName: "Vitalik",
-  startDate: "2222-02-22",
-  endDate: "2222-02-24",
-  overview: "overview",
-  scope: "scoped",
-  outOfScope: "360 no scope",
-  relevantLinks: "wikipedia.org",
-  bountyValue: "35000",
+const defaultValues: Contest = {
+  contestAddress: "",
+  sponsor: "",
+  overview: "",
+  scope: "",
+  outOfScope: "",
+  links: "",
+  name: "",
+  startAt: "",
+  closeAt: "",
+  prize: "",
 };
 
 const CreateContest = () => {
-  const { register, handleSubmit } = useForm<ContestInput>({ defaultValues });
+  const { register, handleSubmit } = useForm<Contest>({ defaultValues });
 
-  const onSubmitHandler = (values: ContestInput) => {
-    //Call backend here
+  const onSubmitHandler = async (values: Contest) => {
+    await fetch("/api/contest", {method: "POST", body: JSON.stringify(values)});
   };
 
   return (
