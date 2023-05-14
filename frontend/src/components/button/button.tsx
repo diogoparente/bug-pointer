@@ -12,7 +12,9 @@ const Button = ({ children, color, size, className, ...rest }: ButtonProps) => {
       <button
         {...rest}
         className={cn(
-          "rounded-xl bg-gradient-to-r from-mainPurple to-mainGreen p-[2px] hover:opacity-90 hover:brightness-200"
+          "rounded-xl bg-gradient-to-r from-mainPurple to-mainGreen p-[2px]",
+          !rest.disabled && "hover:opacity-90 hover:brightness-200",
+          rest.disabled && "cursor-not-allowed opacity-50"
         )}
       >
         <div
@@ -39,11 +41,13 @@ const Button = ({ children, color, size, className, ...rest }: ButtonProps) => {
     <button
       {...rest}
       className={cn(
-        "rounded-xl border-2 font-medium hover:opacity-90 hover:brightness-200",
+        "rounded-xl border-2 font-medium",
         size === "small" && "px-4 py-2",
         size === "large" && "px-8 py-4 text-lg",
         color === "green" && "border-mainGreen bg-mainGreen/5 text-mainGreen",
         color === "purple" && "border-mainPurple bg-mainPurple/5 text-mainPurple",
+        !rest.disabled && "hover:opacity-90 hover:brightness-200",
+        rest.disabled && "cursor-not-allowed opacity-50 hover:brightness-100",
         className
       )}
     >

@@ -37,12 +37,15 @@ const Contest = ({ contest = mock }: ContestProps) => {
         <DefaultBackground className="flex w-full flex-col gap-8">
           <ContestHeader contest={contest} mode="hacker" />
           <div className="flex flex-row justify-start gap-8">
-            <CustomLink color="green" href={router.asPath + "/submit-finding"} type="button">
-              Submit Finding
+            <CustomLink color="green" href={router.asPath + "/submit-vulnerability"} type="button">
+              Submit Vulnerability
             </CustomLink>
             <Button color="green" size="small">
               Apply as Judge
             </Button>
+            <CustomLink color="green" href={router.asPath + "/review-vulnerabilities"} type="button">
+              Review Vulnerability
+            </CustomLink>
           </div>
           <FilledText label="Overview" text={contest.overview} />
           <FilledText label="Scope" text={contest.scope} />
