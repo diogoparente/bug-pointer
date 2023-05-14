@@ -2,44 +2,25 @@ import { SubHeader } from "@/components/text";
 import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
 import CustomLink from "@/components/custom-link";
+import { getContestsBySponsor } from "@/database/entities";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 const Contests = () => {
-  const contests: Contest[] = [
-    {
-      contestAddress: "0x123",
-      name: "Ethereum Contest",
-      overview:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      scope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      outOfScope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      links:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      prize: "35000 USD",
-      startAt: "1683986458000",
-      closeAt: "1687999958000",
-      submittedVulnerabilities: [],
-      filteredVulnerabilities: [],
-    },
-    {
-      contestAddress: "0x123",
-      name: "Ethereum Contest 2",
-      overview:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      scope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      outOfScope:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      links:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-      prize: "40000 USD",
-      startAt: "1679986458000",
-      closeAt: "1687129958000",
-      submittedVulnerabilities: [],
-      filteredVulnerabilities: [],
-    },
-  ];
+  const { address } = useAccount();
+
+  const [contests, setContests] = useState<Contest[]>([]);
+
+  useEffect(() => {
+    const getContests = async () => {
+      return await getContestsBySponsor(address ?? "");
+    };
+    getContests().then((contestsResp) => {
+      const parsedResp = JSON.parse(JSON.stringify(contestsResp));
+      console.log({ parsedResp });
+      setContests(parsedResp);
+    });
+  }, []);
 
   return (
     <Page isMandatoryConnection>

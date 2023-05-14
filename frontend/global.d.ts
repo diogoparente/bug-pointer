@@ -36,6 +36,7 @@ type Contest = {
   startAt: string;
   closeAt: string;
   prize: string;
-  submittedVulnerabilities: SubmittedVulnerability[];
-  filteredVulnerabilities: FilteredVulnerability[];
+  sponsor: string;
+  submittedVulnerabilities?: SubmittedVulnerability[];
+  filteredVulnerabilities?: FilteredVulnerability[];
 };

@@ -4,6 +4,10 @@ import { Page } from "@/components/page";
 import { TextArea } from "@/components/text-area";
 import Button from "@/components/button";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useAccount } from "wagmi";
+import { createWalletClient, custom, http, createPublicClient } from "viem";
+import { polygon } from "viem/chains";
 
 const defaultValues: Contest = {
   contestAddress: "",
@@ -16,13 +20,229 @@ const defaultValues: Contest = {
   startAt: "",
   closeAt: "",
   prize: "",
+  submittedVulnerabilities: [],
+  filteredVulnerabilities: [],
 };
+
+const factoryAbi = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_hackerPassNFT",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "LINK_ADDR",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MAX_DURATION",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MIN_TOTAL_BOUNTY",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "USDC_ADDR",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "activeSponsors",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_ongoingContestDuration",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_waitingJudgeSubmissionDuration",
+        type: "uint256",
+      },
+    ],
+    name: "createContest",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "deployedContests",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "hackerPassNFT",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_sponsor",
+        type: "address",
+      },
+    ],
+    name: "inactivateSponsor",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_newOwner",
+        type: "address",
+      },
+    ],
+    name: "setOwner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const;
 
 const CreateContest = () => {
   const { register, handleSubmit } = useForm<Contest>({ defaultValues });
 
+  const { address } = useAccount();
+
+  const router = useRouter();
+
   const onSubmitHandler = async (values: Contest) => {
-    await fetch("/api/contest", {method: "POST", body: JSON.stringify(values)});
+    if (!window.ethereum) return;
+    const walletClient = createWalletClient({
+      chain: polygon,
+      transport: custom(window.ethereum),
+    });
+
+    const publicClient = createPublicClient({
+      chain: polygon,
+      transport: http(),
+    });
+
+    const [account] = await walletClient.getAddresses();
+
+    const hashApproval = await walletClient.writeContract({
+      account,
+      address: "0xf0A76b1546e2D79050CD2873e0b4d59Ab756Cf52",
+      abi: factoryAbi,
+      functionName: "createContest",
+      args: [BigInt(parseFloat(values.prize) * 10 ** 6), BigInt(172800), BigInt(900)],
+    });
+
+    await publicClient.waitForTransactionReceipt({ hash: hashApproval });
+
+    values.sponsor = address ?? "";
+    await fetch("/api/contest", { method: "POST", body: JSON.stringify(values) });
+    router.push("/my-contests");
   };
 
   return (
@@ -77,7 +297,7 @@ const CreateContest = () => {
             label="Bounty Value(USDC)"
             className="flex-1"
             register={register}
-            name="bountyValue"
+            name="prize"
           />
           <div className="flex w-full flex-col items-center justify-between">
             <Paragraph className="mt-6 text-center text-base">
