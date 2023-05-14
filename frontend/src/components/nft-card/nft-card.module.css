@@ -23,9 +23,13 @@
 
 .card-front {
   border-radius: 2.5%;
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  align-items: center;
   padding: 1rem;
-  background: transparent;
   position: absolute;
+  overflow: clip;
   width: 90%;
   height: 90%;
   backface-visibility: hidden;
