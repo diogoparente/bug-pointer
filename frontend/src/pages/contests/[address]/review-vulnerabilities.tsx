@@ -9,56 +9,40 @@ import Button from "@/components/button";
 import { DiscardedVulnerabilities } from "@/components/discarded-vulnerabilities";
 import { FilteredVulnerabilityItem } from "@/components/filtered-vulnerability-item";
 import { CreateFilteredVulnerability } from "@/components/create-filtered-vulnerability";
+import { getContestByAddress } from "@/database/entities";
+import { GetServerSideProps } from "next";
 
 type ContestProps = {
   contest: Contest;
 };
 
-const subVulnerabilityMock: SubmittedVulnerability[] = [
-  {
-    name: "Vulnerability 1",
-    proofOfConcept:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    id: "1",
-    ownerAddress: "0x123",
-  },
-  {
-    name: "Vulnerability 2",
-    proofOfConcept:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    id: "2",
-    ownerAddress: "0x123",
-  },
-  {
-    name: "Vulnerability 3",
-    proofOfConcept:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    id: "3",
-    ownerAddress: "0x123",
-  },
-];
+// const subVulnerabilityMock: SubmittedVulnerability[] = [
+//   {
+//     name: "Vulnerability 1",
+//     proofOfConcept:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     id: "1",
+//     ownerAddress: "0x123",
+//   },
+//   {
+//     name: "Vulnerability 2",
+//     proofOfConcept:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     id: "2",
+//     ownerAddress: "0x123",
+//   },
+//   {
+//     name: "Vulnerability 3",
+//     proofOfConcept:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+//     id: "3",
+//     ownerAddress: "0x123",
+//   },
+// ];
 
-const mock = {
-  contestAddress: "0x123",
-  name: "Ethereum Contest 2",
-  overview:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  scope:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  outOfScope:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  links:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  prize: "40000 USD",
-  startAt: "1679986458000",
-  closeAt: "1687129958000",
-  submittedVulnerabilities: subVulnerabilityMock,
-  filteredVulnerabilities: [],
-};
-
-const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
+const ReviewVulnerabilities = ({ contest }: ContestProps) => {
   const [submittedVulnerabilities, setSubmittedVulnerabilities] = useState<ExtendedSubmittedVulnerability[]>(
-    contest.submittedVulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" }))
+    contest.submittedVulnerabilities?contest.submittedVulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" })):[]
   );
 
   const [filteredVulnerabilities, setFilteredVulnerabilities] = useState<FilteredVulnerability[]>([]);
@@ -126,5 +110,11 @@ const ReviewVulnerabilities = ({ contest = mock }: ContestProps) => {
     </Page>
   );
 };
+
+export const getStaticProps: GetServerSideProps = async (req) => {
+  const contest = await getContestByAddress(req.query.address as string);
+
+  return { props: { contest } }
+}
 
 export default ReviewVulnerabilities;

@@ -5,30 +5,14 @@ import { FilledText } from "@/components/filled-text";
 import CustomLink from "@/components/custom-link";
 import { ContestHeader } from "@/components/contest-header";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from 'next'
+import { getContestByAddress } from "@/database/entities";
 
 type ContestProps = {
   contest: Contest;
 };
 
-const mock = {
-  contestAddress: "0x123",
-  name: "Ethereum Contest 2",
-  overview:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  scope:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  outOfScope:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  links:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...",
-  prize: "40000 USD",
-  startAt: "1679986458000",
-  closeAt: "1687129958000",
-  submittedVulnerabilities: [],
-  filteredVulnerabilities: [],
-};
-
-const Contest = ({ contest = mock }: ContestProps) => {
+const Contest = ({ contest }: ContestProps) => {
   const router = useRouter();
 
   return (
@@ -56,5 +40,11 @@ const Contest = ({ contest = mock }: ContestProps) => {
     </Page>
   );
 };
+
+export const getStaticProps: GetServerSideProps = async (req) => {
+  const contest = await getContestByAddress(req.query.address as string);
+
+  return { props: { contest } }
+}
 
 export default Contest;

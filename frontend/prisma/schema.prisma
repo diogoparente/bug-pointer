@@ -9,6 +9,7 @@ datasource db {
 
 model Contest {
   contestAddress         String                   @id
+  sponsor                String
   overview               String
   scope                  String
   outOfScope             String
