@@ -13,7 +13,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "sqlite3": "^5.1.6",
-    "wagmi": "^0.12.6"
+    "viem": "^0.3.24",
+    "wagmi": "^0.12.13"
   },
   "devDependencies": {
     "@types/node": "20.1.3",

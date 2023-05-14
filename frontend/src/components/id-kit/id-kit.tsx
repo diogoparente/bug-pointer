@@ -1,8 +1,16 @@
 import { useCallback } from "react";
 import { IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
+import { createWalletClient, custom, http, createPublicClient } from "viem";
+import { erc721ABI } from "wagmi";
+import Button from "../button";
+import Image from "next/image";
+import { polygonMumbai } from "viem/chains";
+import { useRouter } from "next/router";
 
 const IdKit: React.FC = () => {
+  const router = useRouter();
+
   const handleProof = useCallback((result: ISuccessResult) => {
     return new Promise<void>((resolve) => {
       setTimeout(() => resolve(), 3000);
@@ -10,8 +18,35 @@ const IdKit: React.FC = () => {
     });
   }, []);
 
-  const onSuccess = (result: ISuccessResult) => {
-    console.log(JSON.stringify(result, null, 4));
+  const onSuccess = async (result: ISuccessResult) => {
+    try {
+      if (!window.ethereum) return;
+      const walletClient = createWalletClient({
+        chain: polygonMumbai,
+        transport: custom(window.ethereum),
+      });
+
+      const publicClient = createPublicClient({
+        chain: polygonMumbai,
+        transport: http(),
+      });
+
+      const [account] = await walletClient.getAddresses();
+
+      // const hashApproval = await walletClient.writeContract({
+      //   account,
+      //   address: "0xabc",
+      //   abi: "ADD",
+      //   functionName: "verifyAndMint",
+      //   args: [result.proof],
+      // });
+
+      // await publicClient.waitForTransactionReceipt({ hash: hashApproval });
+
+      router.push("/hacker-onboarding/success");
+    } catch (error) {
+      router.push("/hacker-onboarding/error");
+    }
   };
 
   return (
@@ -20,17 +55,15 @@ const IdKit: React.FC = () => {
       signal="my_signal"
       onSuccess={onSuccess}
       handleVerify={handleProof}
-      app_id="app_staging_61309e8182a36a339791554b6353570e"
+      app_id="app_staging_a0f9e01942310da27b55dca73ff2173c"
     >
       {({ open }) => (
-        <div
-          className={
-            "h-19 w-98 flex cursor-pointer flex-row items-center justify-center gap-3 rounded-3xl border border-gray-600 bg-black bg-opacity-80 p-6"
-          }
-          onClick={open}
-        >
-          <p className="text-5xl font-bold leading-7">WorldId</p>
-        </div>
+        <Button color="green" className="mt-6 w-fit" size="large" onClick={open}>
+          <div className="flex flex-row items-center justify-between gap-2">
+            Claim Hacker Pass
+            <Image src="/worldcoin-logo.png" width={40} height={40} alt="WorldCoin Logo" />
+          </div>
+        </Button>
       )}
     </IDKitWidget>
   );
