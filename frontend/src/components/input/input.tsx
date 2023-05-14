@@ -13,8 +13,6 @@ interface InputProps extends PropsWithClassName {
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type = "text", label, color, placeholder = "", name, className, register }, ref) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-
     if (register) {
       register(name, { required: true });
     }
@@ -51,5 +49,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+
+Input.displayName = "input";
 
 export { Input };
