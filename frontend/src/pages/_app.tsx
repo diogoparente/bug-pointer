@@ -3,13 +3,13 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { polygonMumbai } from "wagmi/chains";
+import { polygon } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, provider } = configureChains(
-  [polygonMumbai],
-  [alchemyProvider({ apiKey: "_tTXIJS7JyhhrbZGe8AN4ZjFsxutih17" }), publicProvider()]
+  [polygon],
+  [alchemyProvider({ apiKey: "c1DyHzZUq26hycFCJTXg2oCnP-kur0Iy" }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({

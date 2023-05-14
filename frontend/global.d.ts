@@ -3,10 +3,11 @@ type DefaultProps<P = unknown> = P & { children?: ReactNode | undefined; classNa
 type PropsWithClassName<P = unknown> = P & { className?: string | undefined };
 
 type SubmittedVulnerability = {
-  id: string;
+  id: number;
   name: string;
   proofOfConcept: string;
   ownerAddress: string;
+  contestAddress: string;
 };
 
 type SeverityDegrees = "Critical" | "High" | "Medium" | "Low";
@@ -35,6 +36,7 @@ type Contest = {
   startAt: string;
   closeAt: string;
   prize: string;
-  submittedVulnerabilities: SubmittedVulnerability[];
-  filteredVulnerabilities: FilteredVulnerability[];
+  sponsor: string;
+  submittedVulnerabilities?: SubmittedVulnerability[];
+  filteredVulnerabilities?: FilteredVulnerability[];
 };
