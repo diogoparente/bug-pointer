@@ -18,7 +18,7 @@ const DiscardedVulnerabilitiesManager = ({
     submittedVulnerabilities.filter((vul) => vul.status !== "Reviewed")
   );
 
-  const handleVulnerabilityStatusChange = (id: string) => {
+  const handleVulnerabilityStatusChange = (id: number) => {
     setSubmittedVulnerabilitiesAux((prev) =>
       prev.map((vul) => (vul.id === id ? { ...vul, status: vul.status === "Pending" ? "Discarded" : "Pending" } : vul))
     );

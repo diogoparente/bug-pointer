@@ -37,7 +37,7 @@ function Page({ className, children, isMandatoryConnection = false }: PageProps)
         isAuthed ? (
           children
         ) : (
-          <main className="flex flex-1 flex-col items-center justify-center">
+          <main className="flex flex-1 flex-col items-center justify-center p-4">
             <SubHeader className="text-center">You need to connect your wallet to continue</SubHeader>
           </main>
         )
