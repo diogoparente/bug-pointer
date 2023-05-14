@@ -6,9 +6,8 @@ import { Header } from "@/components/text";
 export default function Home() {
   return (
     <Page>
-      <main className="flex flex-1 flex-col items-center justify-center gap-20">
+      <main className="flex flex-1 flex-col items-center justify-center gap-20 p-6">
         <Header className="px-32 text-center text-white">A sybil-resistant contest platform</Header>
-
         <NftCard />
         <div className="flex flex-row items-center justify-center gap-16">
           <CustomLink type="button" color="purple" className="text-xl" size="large" href={"/create-contest"}>
