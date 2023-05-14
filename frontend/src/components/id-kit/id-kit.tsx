@@ -1,6 +1,8 @@
 import { useCallback } from "react";
 import { IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
+import Button from "../button";
+import Image from "next/image";
 
 const IdKit: React.FC = () => {
   const handleProof = useCallback((result: ISuccessResult) => {
@@ -20,17 +22,15 @@ const IdKit: React.FC = () => {
       signal="my_signal"
       onSuccess={onSuccess}
       handleVerify={handleProof}
-      app_id="app_staging_61309e8182a36a339791554b6353570e"
+      app_id="app_8fbcc62110c7fe846b6dd65845167b9c"
     >
       {({ open }) => (
-        <div
-          className={
-            "h-19 w-98 flex cursor-pointer flex-row items-center justify-center gap-3 rounded-3xl border border-gray-600 bg-black bg-opacity-80 p-6"
-          }
-          onClick={open}
-        >
-          <p className="text-5xl font-bold leading-7">WorldId</p>
-        </div>
+        <Button color="green" className="mt-6 w-fit" size="large" onClick={open}>
+          <div className="flex flex-row items-center justify-between gap-2">
+            Claim Hacker Pass
+            <Image src="/worldcoin-logo.png" width={40} height={40} alt="WorldCoin Logo" />
+          </div>
+        </Button>
       )}
     </IDKitWidget>
   );
