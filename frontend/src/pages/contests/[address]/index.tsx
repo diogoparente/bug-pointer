@@ -5,7 +5,7 @@ import { FilledText } from "@/components/filled-text";
 import CustomLink from "@/components/custom-link";
 import { ContestHeader } from "@/components/contest-header";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps } from "next";
 import { getContestByAddress } from "@/database/entities";
 
 type ContestProps = {
@@ -41,10 +41,10 @@ const Contest = ({ contest }: ContestProps) => {
   );
 };
 
-export const getStaticProps: GetServerSideProps = async (req) => {
+export const getServerSideProps: GetServerSideProps = async (req) => {
   const contest = await getContestByAddress(req.query.address as string);
 
-  return { props: { contest } }
-}
+  return { props: { contest: JSON.parse(JSON.stringify(contest)) } };
+};
 
 export default Contest;

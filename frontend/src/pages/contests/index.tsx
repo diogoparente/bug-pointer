@@ -3,8 +3,7 @@ import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
 import { getAllContests } from "@/database/entities";
 
-const Contests = ({contests}: {contests:Contest[]}) => {
-
+const Contests = ({ contests }: { contests: Contest[] }) => {
   return (
     <Page>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
@@ -23,7 +22,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      contests
+      contests: JSON.parse(JSON.stringify(contests)),
     },
   };
 };
