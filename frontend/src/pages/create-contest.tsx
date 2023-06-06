@@ -3,7 +3,7 @@ import { Input } from "@/components/input";
 import { Page } from "@/components/page";
 import { TextArea } from "@/components/text-area";
 import Button from "@/components/button";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { createWalletClient, custom, http, createPublicClient } from "viem";

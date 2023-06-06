@@ -18,8 +18,6 @@ type ContestProps = {
 };
 
 const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
-  console.log({ contest });
-
   const [submittedVulnerabilities, setSubmittedVulnerabilities] = useState<ExtendedSubmittedVulnerability[]>(
     vulnerabilities ? vulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" })) : []
   );

@@ -2,25 +2,26 @@ import { SubHeader } from "@/components/text";
 import { Page } from "@/components/page";
 import { ContestCard } from "@/components/contest-card";
 import CustomLink from "@/components/custom-link";
-import { getContestsBySponsor } from "@/database/entities";
-import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const Contests = () => {
   const { address } = useAccount();
 
-  const [contests, setContests] = useState<Contest[]>([]);
-
-  useEffect(() => {
-    const getContests = async () => {
-      return await getContestsBySponsor(address ?? "");
-    };
-    getContests().then((contestsResp) => {
-      const parsedResp = JSON.parse(JSON.stringify(contestsResp));
-      console.log({ parsedResp });
-      setContests(parsedResp);
+  const fetchMyContests = ({ queryKey }: any) => {
+    const sponsorParam = queryKey[1];
+    return axios.get(`/api/fetchRentedNFTs?sponsor=${sponsorParam}`).then((response) => {
+      return response.data.rentedNFTs as Contest[];
     });
-  }, []);
+  };
+
+  const { data: contests } = useQuery({
+    queryKey: ["myContests", address],
+    queryFn: fetchMyContests,
+    refetchOnWindowFocus: false,
+    initialData: [],
+  });
 
   return (
     <Page isMandatoryConnection>
