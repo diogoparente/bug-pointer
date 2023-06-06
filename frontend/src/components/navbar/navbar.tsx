@@ -25,18 +25,11 @@ function Navbar() {
       return ownedNFTsBasis;
     };
     fetchNFTS().then((ownedNFTs) => {
-      console.log(ownedNFTs);
-      if (
-        ownedNFTs.some(
-          (nft) => nft.contract.address.toLowerCase() === "0x6Fcd41fF1f24CbEF51E492fB4B63c56aBf2B2c14".toLowerCase()
-        )
-      ) {
-        setLevelInfo(
-          "Hacker - Level " +
-            ownedNFTs.filter(
-              (nft) => nft.contract.address.toLowerCase() === "0x6Fcd41fF1f24CbEF51E492fB4B63c56aBf2B2c14".toLowerCase()
-            )[0].rawMetadata?.attributes[0].value ?? "x"
-        );
+      const filteredNFTs = ownedNFTs.filter(
+        (nft) => nft.contract.address.toLowerCase() === "0x6Fcd41fF1f24CbEF51E492fB4B63c56aBf2B2c14".toLowerCase()
+      );
+      if (filteredNFTs.length > 0 && filteredNFTs[0].rawMetadata?.attributes?.[0].value) {
+        setLevelInfo("Hacker - Level " + filteredNFTs[0].rawMetadata?.attributes[0].value ?? "x");
       } else {
         setLevelInfo("No Hacker Pass");
       }
