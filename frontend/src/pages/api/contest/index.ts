@@ -4,10 +4,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   if (_req.method === "POST") {
     try {
-      const contest = _req.body;
+      const contest = JSON.parse(_req.body);
       const insertedContest = await insertContest(contest);
       res.status(200).json({ statusCode: 200, data: insertedContest });
     } catch (error: any) {
+      console.log(error);
       res.status(500).json({ statusCode: 500, message: error.message });
     }
   } else if (_req.method === "GET") {
@@ -15,6 +16,7 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
       const allContests = await getAllContests();
       res.status(200).json({ statusCode: 200, data: allContests });
     } catch (error: any) {
+      console.log(error);
       res.status(500).json({ statusCode: 500, message: error.message });
     }
   } else {

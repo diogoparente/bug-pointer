@@ -3,7 +3,7 @@ import { forwardRef, useRef } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 interface InputProps extends PropsWithClassName {
-  type?: "text" | "date";
+  type?: "text" | "date" | "time";
   label?: string;
   color: "green" | "purple";
   placeholder?: string;
@@ -42,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               type === "date" && "w-fit"
             )}
             placeholder={placeholder}
-            {...register!(name)}
+            {...register!(name, { valueAsDate: type === "date" })}
           />
         </div>
       </div>

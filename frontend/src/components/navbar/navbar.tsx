@@ -17,23 +17,24 @@ function Navbar() {
 
   const [levelInfo, setLevelInfo] = useState("");
 
-  const alchemy = new Alchemy(config);
-
   useEffect(() => {
-    const fetchNFTS = async () => {
-      const ownedNFTsBasis = (await alchemy.nft.getNftsForOwner(address ?? "")).ownedNfts;
+    const fetchNFTS = async (_address: string) => {
+      const alchemy = new Alchemy(config);
+      const ownedNFTsBasis = (await alchemy.nft.getNftsForOwner(_address)).ownedNfts;
       return ownedNFTsBasis;
     };
-    fetchNFTS().then((ownedNFTs) => {
-      const filteredNFTs = ownedNFTs.filter(
-        (nft) => nft.contract.address.toLowerCase() === "0x6Fcd41fF1f24CbEF51E492fB4B63c56aBf2B2c14".toLowerCase()
-      );
-      if (filteredNFTs.length > 0 && filteredNFTs[0].rawMetadata?.attributes?.[0].value) {
-        setLevelInfo("Hacker - Level " + filteredNFTs[0].rawMetadata?.attributes[0].value ?? "x");
-      } else {
-        setLevelInfo("No Hacker Pass");
-      }
-    });
+    if (address) {
+      fetchNFTS(address).then((ownedNFTs) => {
+        const filteredNFTs = ownedNFTs.filter(
+          (nft) => nft.contract.address.toLowerCase() === "0x6Fcd41fF1f24CbEF51E492fB4B63c56aBf2B2c14".toLowerCase()
+        );
+        if (filteredNFTs.length > 0 && filteredNFTs[0].rawMetadata?.attributes?.[0].value) {
+          setLevelInfo("Hacker - Level " + filteredNFTs[0].rawMetadata?.attributes[0].value ?? "x");
+        } else {
+          setLevelInfo("No Hacker Pass");
+        }
+      });
+    }
   }, [address]);
 
   return (

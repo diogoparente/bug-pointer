@@ -2,9 +2,15 @@ import { getContestsBySponsor } from "@/database/entities";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
-  const sponsor = _req.query.sponsor;
-  const contestsBySponsor = await getContestsBySponsor(sponsor as string);
-  res.status(200).json({ statusCode: 200, data: contestsBySponsor });
+  try {
+    const sponsor = _req.query.sponsor;
+    const contestsBySponsor = await getContestsBySponsor(sponsor as string);
+    console.log(contestsBySponsor);
+    res.status(200).json({ statusCode: 200, data: contestsBySponsor });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).json({ statusCode: 500, message: error.message });
+  }
 };
 
 export default handler;

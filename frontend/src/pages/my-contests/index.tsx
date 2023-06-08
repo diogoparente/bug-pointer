@@ -11,8 +11,11 @@ const Contests = () => {
 
   const fetchMyContests = ({ queryKey }: any) => {
     const sponsorParam = queryKey[1];
-    return axios.get(`/api/fetchRentedNFTs?sponsor=${sponsorParam}`).then((response) => {
-      return response.data.rentedNFTs as Contest[];
+    if (!sponsorParam) {
+      return [];
+    }
+    return axios.get(`/api/contest?sponsor=${sponsorParam}`).then((response) => {
+      return response.data.data as Contest[];
     });
   };
 

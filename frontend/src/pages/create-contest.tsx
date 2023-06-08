@@ -9,19 +9,32 @@ import { useAccount } from "wagmi";
 import { createWalletClient, custom, http, createPublicClient } from "viem";
 import { polygon } from "viem/chains";
 
-const defaultValues: Contest = {
+type ContestFormValues = {
+  contestAddress: string;
+  overview: string;
+  scope: string;
+  outOfScope: string;
+  links: string;
+  name: string;
+  startAtTime: string;
+  startAtDay: Date;
+  closeAtTime: string;
+  closeAtDay: Date;
+  prize: string;
+};
+
+const defaultValues: ContestFormValues = {
   contestAddress: "",
-  sponsor: "",
   overview: "",
   scope: "",
   outOfScope: "",
   links: "",
   name: "",
-  startAt: "",
-  closeAt: "",
+  startAtTime: "",
+  startAtDay: new Date(),
+  closeAtTime: "",
+  closeAtDay: new Date(),
   prize: "",
-  submittedVulnerabilities: [],
-  filteredVulnerabilities: [],
 };
 
 const factoryAbi = [
@@ -210,38 +223,55 @@ const factoryAbi = [
 ] as const;
 
 const CreateContest = () => {
-  const { register, handleSubmit } = useForm<Contest>({ defaultValues });
+  const { register, handleSubmit } = useForm<ContestFormValues>({ defaultValues });
 
   const { address } = useAccount();
 
   const router = useRouter();
 
-  const onSubmitHandler = async (values: Contest) => {
-    if (!window.ethereum) return;
-    const walletClient = createWalletClient({
-      chain: polygon,
-      transport: custom(window.ethereum),
-    });
+  const onSubmitHandler = async (values: ContestFormValues) => {
+    // if (!window.ethereum) return;
+    // const walletClient = createWalletClient({
+    //   chain: polygon,
+    //   transport: custom(window.ethereum),
+    // });
 
-    const publicClient = createPublicClient({
-      chain: polygon,
-      transport: http(),
-    });
+    // const publicClient = createPublicClient({
+    //   chain: polygon,
+    //   transport: http(),
+    // });
 
-    const [account] = await walletClient.getAddresses();
+    // const [account] = await walletClient.getAddresses();
 
-    const hashApproval = await walletClient.writeContract({
-      account,
-      address: "0xf0A76b1546e2D79050CD2873e0b4d59Ab756Cf52",
-      abi: factoryAbi,
-      functionName: "createContest",
-      args: [BigInt(parseFloat(values.prize) * 10 ** 6), BigInt(172800), BigInt(900)],
-    });
+    // const hashApproval = await walletClient.writeContract({
+    //   account,
+    //   address: "0xf0A76b1546e2D79050CD2873e0b4d59Ab756Cf52",
+    //   abi: factoryAbi,
+    //   functionName: "createContest",
+    //   args: [BigInt(parseFloat(values.prize) * 10 ** 6), BigInt(172800), BigInt(900)],
+    // });
 
-    await publicClient.waitForTransactionReceipt({ hash: hashApproval });
+    // await publicClient.waitForTransactionReceipt({ hash: hashApproval });
 
-    values.sponsor = address ?? "";
-    await fetch("/api/contest", { method: "POST", body: JSON.stringify(values) });
+    const [startHours, startMinutes] = values.startAtTime.split(":");
+    values.startAtDay.setHours(parseFloat(startHours), parseFloat(startMinutes));
+
+    const [closeHours, closeMinutes] = values.closeAtTime.split(":");
+    values.closeAtDay.setHours(parseFloat(closeHours), parseFloat(closeMinutes));
+
+    const filteredBody = {
+      contestAddress: Math.random().toString(),
+      overview: values.overview,
+      scope: values.scope,
+      outOfScope: values.outOfScope,
+      links: values.links,
+      name: values.name,
+      sponsor: address ?? "",
+      prize: values.prize,
+      startAt: values.startAtDay.toISOString(),
+      closeAt: values.closeAtDay.toISOString(),
+    };
+    await fetch("/api/contest", { method: "POST", body: JSON.stringify(filteredBody) });
     router.push("/my-contests");
   };
 
@@ -254,20 +284,14 @@ const CreateContest = () => {
           selected
         </Paragraph>
         <form className="flex w-3/5 flex-col gap-6" onSubmit={handleSubmit(onSubmitHandler)}>
-          <div className="flex flex-row items-center justify-between gap-20">
-            <Input
-              color="purple"
-              type="text"
-              label="Contest Name"
-              className="flex-1"
-              register={register}
-              name="contestName"
-            />
-
-            <div className="flex flex-row items-center justify-between gap-8">
-              <Input color="purple" type="date" label="Start Date" register={register} name="startDate" />
-              <Input color="purple" type="date" label="End Date" register={register} name="endDate" />{" "}
-            </div>
+          <div className="flex flex-row items-center justify-between">
+            <Input color="purple" type="text" label="Contest Name" className="flex-1" register={register} name="name" />
+          </div>
+          <div className="flex flex-row items-center justify-between gap-8">
+            <Input color="purple" type="time" label="Start Time" register={register} name="startAtTime" />
+            <Input color="purple" type="date" label="Start Day" register={register} name="startAtDay" />
+            <Input color="purple" type="time" label="Start Time" register={register} name="closeAtTime" />
+            <Input color="purple" type="date" label="End Day" register={register} name="closeAtDay" />
           </div>
           <TextArea
             color="purple"
@@ -289,7 +313,7 @@ const CreateContest = () => {
             label="Relevant Links"
             className="min-h-[14rem] flex-1"
             register={register}
-            name="relevantLinks"
+            name="links"
           />
           <Input
             color="purple"

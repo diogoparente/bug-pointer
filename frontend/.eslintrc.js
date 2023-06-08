@@ -31,7 +31,7 @@ module.exports = {
         ignoreRegExpLiterals: true,
         ignoreStrings: true,
       },
-    ],
+    ]
   },
   env: {
     browser: true,

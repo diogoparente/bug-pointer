@@ -18,7 +18,6 @@ const Contests = ({ contests }: { contests: Contest[] }) => {
 
 export const getServerSideProps = async () => {
   const contests = await getAllContests();
-  console.log({ contests });
 
   return {
     props: {
