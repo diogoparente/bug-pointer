@@ -1,16 +1,8 @@
 /* eslint-disable max-len */
 import useAuthentication from "@/hooks/useAuthentication";
-import { Navbar } from "@/components/navbar";
 import { SubHeader } from "../text";
 import { cn } from "@/utils/utils";
-import { Source_Code_Pro } from "next/font/google";
 import { useState, useEffect } from "react";
-
-const source_code_pro = Source_Code_Pro({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-source-code-pro",
-});
 
 interface PageProps extends DefaultProps {
   isMandatoryConnection?: boolean;
@@ -25,14 +17,7 @@ function Page({ className, children, isMandatoryConnection = false }: PageProps)
   }, []);
 
   return (
-    <div
-      className={cn(
-        // eslint-disable-next-line max-len
-        `flex min-h-screen w-screen flex-col items-center justify-start ${source_code_pro.variable} font-sourceCodePro text-white`,
-        className
-      )}
-    >
-      <Navbar />
+    <div className={cn(`flex min-h-screen w-screen flex-col items-center justify-start`, className)}>
       {!isMandatoryConnection || isMounted ? (
         isAuthed ? (
           children
