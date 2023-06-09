@@ -40,13 +40,13 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
           <Tabs.Root className="flex w-full flex-col" defaultValue="tab1">
             <Tabs.List className="flex w-full flex-row justify-center gap-32">
               <Tabs.Trigger
-                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
+                className="w-fit select-none items-center justify-center border-none px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative"
                 value="tab1"
               >
                 Submitted Vulnerabilities
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="w-fit select-none items-center justify-center px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black"
+                className="w-fit select-none items-center justify-center border-none px-8 py-4 text-lg leading-none outline-none first:rounded-tl-md last:rounded-tr-md data-[state=closed]:opacity-70 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative"
                 value="tab2"
               >
                 Reviewed Vulnerabilities
@@ -91,8 +91,6 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
 export const getServerSideProps: GetServerSideProps = async (req) => {
   const contest = await getContestByAddress(req.query.address as string);
   const vulnerabilities = await getSubmittedVulnerabilitiesByContestAddress(req.query.address as string);
-
-  console.log({ vulnerabilities });
 
   return {
     props: {

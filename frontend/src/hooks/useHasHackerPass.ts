@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 
 const useHasHackerPass = () => {
   const { address } = useAccount();
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasHackerPass, setHasHackerPass] = useState(false);
   const [hackerPassLevel, setHackerPassLevel] = useState<number | undefined>(undefined);
 
@@ -15,12 +15,12 @@ const useHasHackerPass = () => {
     };
 
     const alchemy = new Alchemy(MATIC_CONFIG);
-    setLoading(true);
+    setIsLoading(true);
 
     if (!address) {
       setHasHackerPass(false);
       setHackerPassLevel(undefined);
-      setLoading(false);
+      setIsLoading(false);
       return;
     }
     fetchNFTS(address).then((ownedNFTs) => {
@@ -30,16 +30,16 @@ const useHasHackerPass = () => {
       if (filteredNFTs.length > 0 && filteredNFTs[0].rawMetadata?.attributes?.[0].value) {
         setHasHackerPass(true);
         setHackerPassLevel(parseInt(filteredNFTs[0].rawMetadata?.attributes?.[0].value));
-        setLoading(false);
+        setIsLoading(false);
         return;
       }
       setHasHackerPass(false);
       setHackerPassLevel(undefined);
-      setLoading(false);
+      setIsLoading(false);
     });
   }, [address]);
 
-  return { hasHackerPass, hackerPassLevel, loading };
+  return { hasHackerPass, hackerPassLevel, isLoading };
 };
 
 export default useHasHackerPass;

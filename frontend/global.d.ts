@@ -40,3 +40,5 @@ type Contest = {
   submittedVulnerabilities?: SubmittedVulnerability[];
   filteredVulnerabilities?: FilteredVulnerability[];
 };
+
+type WithoutId<T extends { id: string | number }> = Omit<T, "id">;

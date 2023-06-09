@@ -4,8 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   if (_req.method === "POST") {
     try {
-      const vuln = _req.body;
-      const insertedVuln = await insertSubmittedVulnerability(JSON.parse(vuln));
+      const { id, ...vuln } = JSON.parse(_req.body);
+      const insertedVuln = await insertSubmittedVulnerability(vuln);
       res.status(200).json({ statusCode: 200, data: insertedVuln });
     } catch (error: any) {
       console.log(error);
