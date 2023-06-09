@@ -2,8 +2,11 @@ import CustomLink from "@/components/custom-link";
 import { NftCard } from "@/components/nft-card/nft-card";
 import { Page } from "@/components/page";
 import { Header } from "@/components/text";
+import useHasHackerPass from "@/hooks/useHasHackerPass";
 
 export default function Home() {
+  const { hasHackerPass } = useHasHackerPass();
+
   return (
     <Page>
       <main className="flex flex-1 flex-col items-center justify-center gap-20 p-6">
@@ -13,7 +16,13 @@ export default function Home() {
           <CustomLink type="button" color="purple" className="text-xl" size="large" href={"/create-contest"}>
             I&#39;m a Sponsor
           </CustomLink>
-          <CustomLink type="button" color="green" className="text-xl" size="large" href={"/hacker-onboarding"}>
+          <CustomLink
+            type="button"
+            color="green"
+            className="text-xl"
+            size="large"
+            href={hasHackerPass ? "/contests" : "/hacker-onboarding"}
+          >
             I&#39;m a Hacker
           </CustomLink>
         </div>
