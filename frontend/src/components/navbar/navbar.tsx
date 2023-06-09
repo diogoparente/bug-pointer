@@ -6,7 +6,7 @@ import { cn } from "@/utils/utils";
 import useHasHackerPass from "@/hooks/useHasHackerPass";
 
 function Navbar() {
-  const { hasHackerPass, hackerPassLevel } = useHasHackerPass();
+  const { hasHackerPass, hackerPassLevel, loading } = useHasHackerPass();
 
   return (
     <nav className="relative flex w-full items-center justify-between px-5 py-2">
@@ -14,9 +14,11 @@ function Navbar() {
         <Image alt="bug-pointer logo" src={"/logo.png"} height={75} width={75} />
       </Link>
       <div className="flex flex-row items-center gap-4">
-        <p className={cn("font-semibold text-white", !hasHackerPass && "text-red-600")}>
-          {hasHackerPass ? "Hacker - Level " + hackerPassLevel : "No Hacker Pass"}
-        </p>
+        {!loading && (
+          <p className={cn("font-semibold text-white", !hasHackerPass && "text-red-600")}>
+            {hasHackerPass ? "Hacker - Level " + hackerPassLevel : "No Hacker Pass"}
+          </p>
+        )}
         <ConnectButton />
       </div>
       <FadingLine className="absolute bottom-0 left-0" />
