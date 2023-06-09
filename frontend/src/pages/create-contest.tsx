@@ -260,7 +260,7 @@ const CreateContest = () => {
     values.closeAtDay.setHours(parseFloat(closeHours), parseFloat(closeMinutes));
 
     const filteredBody = {
-      contestAddress: Math.random().toString(),
+      contestAddress: "0x" + Math.random().toString().substring(2, 6),
       overview: values.overview,
       scope: values.scope,
       outOfScope: values.outOfScope,
