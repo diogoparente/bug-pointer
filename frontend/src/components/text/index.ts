@@ -1,1 +1,1 @@
-export { Header, SubHeader, Paragraph } from "./text";
+export { Header, SubHeader, Paragraph, SubText } from "./text";

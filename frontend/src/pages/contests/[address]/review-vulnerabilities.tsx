@@ -11,6 +11,7 @@ import { FilteredVulnerabilityItem } from "@/components/filtered-vulnerability-i
 import { CreateFilteredVulnerability } from "@/components/create-filtered-vulnerability";
 import { getContestByAddress, getSubmittedVulnerabilitiesByContestAddress } from "@/database/entities";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 
 type ContestProps = {
   contest: Contest;
@@ -26,6 +27,9 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
 
   return (
     <Page isMandatoryConnection>
+      <Head>
+        <title>{"Bug Pointer | Review Vulnerabilities"}</title>
+      </Head>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
         <DefaultBackground className="flex w-full flex-col gap-8">
           <ContestHeader contest={contest} mode="hacker" />

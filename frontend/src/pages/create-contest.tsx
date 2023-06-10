@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { createWalletClient, custom, http, createPublicClient } from "viem";
 import { polygon } from "viem/chains";
+import Head from "next/head";
 
 type ContestFormValues = {
   contestAddress: string;
@@ -277,13 +278,16 @@ const CreateContest = () => {
 
   return (
     <Page isMandatoryConnection>
+      <Head>
+        <title>{"Bug Pointer | Create Contest"}</title>
+      </Head>
       <main className="flex flex-1 flex-col items-center justify-center gap-8 py-24">
         <SubHeader>First Step</SubHeader>
-        <Paragraph>
+        <Paragraph className="max-w-[90%] text-center">
           Add the basic information about your Contest. During the first two days of the Contest the judge will be
           selected
         </Paragraph>
-        <form className="flex w-3/5 flex-col gap-6" onSubmit={handleSubmit(onSubmitHandler)}>
+        <form className="flex w-3/4 flex-col gap-6" onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="flex flex-row items-center justify-between">
             <Input color="purple" type="text" label="Contest Name" className="flex-1" register={register} name="name" />
           </div>

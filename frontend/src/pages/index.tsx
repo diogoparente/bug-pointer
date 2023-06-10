@@ -3,12 +3,16 @@ import { NftCard } from "@/components/nft-card/nft-card";
 import { Page } from "@/components/page";
 import { Header } from "@/components/text";
 import useHasHackerPass from "@/hooks/useHasHackerPass";
+import Head from "next/head";
 
 export default function Home() {
   const { hasHackerPass } = useHasHackerPass();
 
   return (
     <Page>
+      <Head>
+        <title>{"Bug Pointer"}</title>
+      </Head>
       <main className="flex flex-1 flex-col items-center justify-center gap-20 p-6">
         <Header className="px-32 text-center text-white">A sybil-resistant bug bounty platform</Header>
         <NftCard />

@@ -5,6 +5,7 @@ import CustomLink from "@/components/custom-link";
 import { useAccount } from "wagmi";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Head from "next/head";
 
 const Contests = () => {
   const { address } = useAccount();
@@ -28,6 +29,9 @@ const Contests = () => {
 
   return (
     <Page isMandatoryConnection>
+      <Head>
+        <title>{"Bug Pointer | My Contests"}</title>
+      </Head>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
         <SubHeader className="mb-8 w-full text-left text-mainPurple">My Contests</SubHeader>
         {contests.map((contest) => (

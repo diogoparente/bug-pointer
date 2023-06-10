@@ -39,7 +39,7 @@ const useHasHackerPass = () => {
     });
   }, [address]);
 
-  return { hasHackerPass, hackerPassLevel, isLoading };
+  return { hasHackerPass, hackerPassLevel, isLoading, isConnected: address !== undefined };
 };
 
 export default useHasHackerPass;

@@ -4,6 +4,7 @@ import IdKit from "@/components/id-kit";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useHasHackerPass from "@/hooks/useHasHackerPass";
+import Head from "next/head";
 
 const HackerOnboarding = () => {
   const { hasHackerPass } = useHasHackerPass();
@@ -18,6 +19,9 @@ const HackerOnboarding = () => {
 
   return (
     <Page isMandatoryConnection>
+      <Head>
+        <title>{"Bug Pointer | Hacker Onboarding"}</title>
+      </Head>
       <main className="flex flex-1 flex-col items-center justify-center gap-8">
         <SubHeader>Claim your Hacker Pass!</SubHeader>
         <Paragraph>Validate your identity with WorldCoin and mint your Hacker Pass to start!</Paragraph>
