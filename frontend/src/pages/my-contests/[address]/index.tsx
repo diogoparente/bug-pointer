@@ -3,12 +3,12 @@ import { DefaultBackground } from "@/components/default-background";
 import { Page } from "@/components/page";
 import { Paragraph } from "@/components/text";
 import { FilteredVulnerabilityInfo } from "@/components/vulnerability-info";
-import { getContestByAddress } from "@/database/entities";
+import { getContestByAddressWithVulnerabilities } from "@/database/entities";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 
 type ContestProps = {
-  contest: Contest;
+  contest: ContestWithVulnerabilities;
 };
 
 const MyContest = ({ contest }: ContestProps) => (
@@ -34,7 +34,7 @@ const MyContest = ({ contest }: ContestProps) => (
 );
 
 export const getServerSideProps: GetServerSideProps = async (req) => {
-  const contest = await getContestByAddress(req.query.address as string);
+  const contest = await getContestByAddressWithVulnerabilities(req.query.address as string);
 
   return { props: { contest: JSON.parse(JSON.stringify(contest)) } };
 };

@@ -15,6 +15,10 @@ type Contest = {
   prize: string;
 };
 
+type ContestWithVulnerabilities = Contest & {
+  filteredVulnerabilities: FilteredVulnerability[];
+};
+
 type FilteredVulnerability = {
   id: number;
   name: string;

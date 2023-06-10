@@ -14,6 +14,18 @@ const getContestByAddress = async (address: string) => {
   return contests;
 };
 
+const getContestByAddressWithVulnerabilities = async (address: string) => {
+  const contests = await prisma.contest.findUnique({
+    where: {
+      contestAddress: address,
+    },
+    include: {
+      filteredVulnerabilities: true,
+    },
+  });
+  return contests;
+};
+
 const getContestsBySponsor = async (sponsor: string) => {
   const contests = await prisma.contest.findMany({
     where: {
@@ -30,4 +42,10 @@ const insertContest = async (contest: Contest) => {
   return insertedContest;
 };
 
-export { getAllContests, getContestByAddress, getContestsBySponsor, insertContest };
+export {
+  getAllContests,
+  getContestByAddress,
+  getContestByAddressWithVulnerabilities,
+  getContestsBySponsor,
+  insertContest,
+};

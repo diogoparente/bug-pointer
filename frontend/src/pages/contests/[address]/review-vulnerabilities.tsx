@@ -12,6 +12,7 @@ import { CreateFilteredVulnerability } from "@/components/create-filtered-vulner
 import { getContestByAddress, getSubmittedVulnerabilitiesByContestAddress } from "@/database/entities";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 type ContestProps = {
   contest: Contest;
@@ -19,6 +20,8 @@ type ContestProps = {
 };
 
 const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
+  const router = useRouter();
+
   const [submittedVulnerabilities, setSubmittedVulnerabilities] = useState<ExtendedSubmittedVulnerability[]>(
     vulnerabilities ? vulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" })) : []
   );
@@ -26,6 +29,11 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
   const [filteredVulnerabilities, setFilteredVulnerabilities] = useState<
     WithoutId<FilteredVulnerabilityWithSubmitted>[]
   >([]);
+
+  const handleSubmission = async () => {
+    await fetch("/api/filtered", { method: "POST", body: JSON.stringify(filteredVulnerabilities) });
+    router.push(`/contests/${contest.contestAddress}/`);
+  };
 
   return (
     <Page isMandatoryConnection>
@@ -40,6 +48,7 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
             size="large"
             className="mx-auto w-fit"
             disabled={submittedVulnerabilities.some((vul) => vul.status === "Pending")}
+            onClick={handleSubmission}
           >
             Submit Review
           </Button>
