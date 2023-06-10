@@ -23,7 +23,9 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
     vulnerabilities ? vulnerabilities.map((vulnerability) => ({ ...vulnerability, status: "Pending" })) : []
   );
 
-  const [filteredVulnerabilities, setFilteredVulnerabilities] = useState<FilteredVulnerability[]>([]);
+  const [filteredVulnerabilities, setFilteredVulnerabilities] = useState<
+    WithoutId<FilteredVulnerabilityWithSubmitted>[]
+  >([]);
 
   return (
     <Page isMandatoryConnection>
@@ -37,7 +39,7 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
             color="green"
             size="large"
             className="mx-auto w-fit"
-            disabled={submittedVulnerabilities.filter((vul) => vul.status === "Pending").length !== 0}
+            disabled={submittedVulnerabilities.some((vul) => vul.status === "Pending")}
           >
             Submit Review
           </Button>
@@ -70,7 +72,10 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
             <Tabs.Content className="flex grow flex-col gap-8 rounded-b-md p-5 outline-none" value="tab2">
               <div className="flex flex-col gap-4">
                 {filteredVulnerabilities.map((vulnerability) => (
-                  <FilteredVulnerabilityItem vulnerability={vulnerability} key={vulnerability.id} />
+                  <FilteredVulnerabilityItem
+                    vulnerability={vulnerability}
+                    key={vulnerability.name + vulnerability.proofOfConcept}
+                  />
                 ))}
               </div>
               {filteredVulnerabilities.length > 0 && <RegularLine />}
@@ -78,12 +83,16 @@ const ReviewVulnerabilities = ({ contest, vulnerabilities }: ContestProps) => {
                 submittedVulnerabilities={submittedVulnerabilities}
                 setSubmittedVulnerabilities={setSubmittedVulnerabilities}
               />
-              <RegularLine />
-              <CreateFilteredVulnerability
-                submittedVulnerabilities={submittedVulnerabilities}
-                setSubmittedVulnerabilities={setSubmittedVulnerabilities}
-                setFilteredVulnerabilities={setFilteredVulnerabilities}
-              />
+              {submittedVulnerabilities.some((vul) => vul.status === "Pending") && (
+                <>
+                  <RegularLine />
+                  <CreateFilteredVulnerability
+                    submittedVulnerabilities={submittedVulnerabilities}
+                    setSubmittedVulnerabilities={setSubmittedVulnerabilities}
+                    setFilteredVulnerabilities={setFilteredVulnerabilities}
+                  />
+                </>
+              )}
             </Tabs.Content>
           </Tabs.Root>
         </DefaultBackground>

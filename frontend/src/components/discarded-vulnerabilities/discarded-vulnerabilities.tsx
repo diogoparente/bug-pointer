@@ -36,7 +36,7 @@ const DiscardedVulnerabilitiesManager = ({
       <Dialog.Overlay className="fixed inset-0 bg-black/70 data-[state=open]:animate-overlayShow" />
       <Dialog.Content className="fixed left-[50%] top-[50%] flex max-h-[85vh] translate-x-[-50%] translate-y-[-50%] flex-col items-center justify-between rounded-md bg-backgroundGrey px-12 py-8 focus:outline-none data-[state=open]:animate-contentShow">
         <SubHeader className="text-2xl">Discard Vulnerabilities</SubHeader>
-        <div className="mb-8 mt-6 flex flex-col gap-6">
+        <div className="mb-8 mt-6 flex flex-col items-center gap-6">
           {submittedVulnerabilitiesAux.map((vulnerability) => (
             <button key={vulnerability.id} onClick={() => handleVulnerabilityStatusChange(vulnerability.id)}>
               <Tag color={vulnerability.status === "Discarded" ? "red" : "grey"}>{vulnerability.name}</Tag>

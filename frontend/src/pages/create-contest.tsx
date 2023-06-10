@@ -262,16 +262,17 @@ const CreateContest = () => {
 
     const filteredBody = {
       contestAddress: "0x" + Math.random().toString().substring(2, 6),
+      sponsor: address ?? "",
       overview: values.overview,
       scope: values.scope,
       outOfScope: values.outOfScope,
       links: values.links,
       name: values.name,
-      sponsor: address ?? "",
+      startAt: new Date(values.startAtDay),
+      closeAt: new Date(values.closeAtDay),
       prize: values.prize,
-      startAt: values.startAtDay.toISOString(),
-      closeAt: values.closeAtDay.toISOString(),
     };
+
     await fetch("/api/contest", { method: "POST", body: JSON.stringify(filteredBody) });
     router.push("/my-contests");
   };
@@ -294,7 +295,7 @@ const CreateContest = () => {
           <div className="flex flex-row items-center justify-between gap-8">
             <Input color="purple" type="time" label="Start Time" register={register} name="startAtTime" />
             <Input color="purple" type="date" label="Start Day" register={register} name="startAtDay" />
-            <Input color="purple" type="time" label="Start Time" register={register} name="closeAtTime" />
+            <Input color="purple" type="time" label="End Time" register={register} name="closeAtTime" />
             <Input color="purple" type="date" label="End Day" register={register} name="closeAtDay" />
           </div>
           <TextArea
