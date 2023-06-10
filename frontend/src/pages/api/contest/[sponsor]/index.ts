@@ -5,7 +5,6 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const sponsor = _req.query.sponsor;
     const contestsBySponsor = await getContestsBySponsor(sponsor as string);
-    console.log(contestsBySponsor);
     res.status(200).json({ statusCode: 200, data: contestsBySponsor });
   } catch (error: any) {
     console.log(error);

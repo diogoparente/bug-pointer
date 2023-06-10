@@ -7,7 +7,6 @@ interface DateDisplayProps {
 }
 
 const DateDisplay = ({ date, label }: DateDisplayProps) => {
-  console.log(date);
   return (
     <div className="flex flex-col items-start justify-start gap-2">
       <Paragraph>{label}</Paragraph>
