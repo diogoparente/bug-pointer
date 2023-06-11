@@ -7,6 +7,7 @@ import { ContestHeader } from "@/components/contest-header";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { getContestByAddress } from "@/database/entities";
+import Head from "next/head";
 
 type ContestProps = {
   contest: Contest;
@@ -17,6 +18,9 @@ const Contest = ({ contest }: ContestProps) => {
 
   return (
     <Page>
+      <Head>
+        <title>{"Bug Pointer | " + contest.name}</title>
+      </Head>
       <main className="flex w-full flex-1 flex-col items-center justify-start p-10">
         <DefaultBackground className="flex w-full flex-col gap-8">
           <ContestHeader contest={contest} mode="hacker" />

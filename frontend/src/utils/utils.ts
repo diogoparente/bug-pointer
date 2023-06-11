@@ -11,7 +11,7 @@ const nrCorrector = (num: number) => {
 
 export const dateFormater = (epochs?: string) => {
   if (!epochs) return "";
-  const date = new Date(parseFloat(epochs));
+  const date = new Date(epochs);
 
   const hours = nrCorrector(date.getHours());
   const minutes = nrCorrector(date.getMinutes());

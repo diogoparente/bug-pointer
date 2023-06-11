@@ -8,34 +8,37 @@ datasource db {
 }
 
 model Contest {
-  contestAddress         String                   @id
-  sponsor                String
-  overview               String
-  scope                  String
-  outOfScope             String
-  links                  String
-  name                   String
-  startAt                DateTime
-  closeAt                DateTime
-  prize                  String
-  SubmittedVulnerability SubmittedVulnerability[]
+  contestAddress           String                   @id
+  sponsor                  String
+  overview                 String
+  scope                    String
+  outOfScope               String
+  links                    String
+  name                     String
+  startAt                  DateTime
+  closeAt                  DateTime
+  prize                    String
+  submittedVulnerabilities SubmittedVulnerability[]
+  filteredVulnerabilities  FilteredVulnerability[]
 }
 
 model FilteredVulnerability {
-  id                     Int                    @id @default(autoincrement())
-  subVulnId              Int
-  name                   String
-  proofOfConcept         String
-  severity               String
-  SubmittedVulnerability SubmittedVulnerability @relation(fields: [subVulnId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                       Int                      @id @default(autoincrement())
+  name                     String
+  proofOfConcept           String
+  severity                 String
+  contestAddress           String
+  Contest                  Contest                  @relation(fields: [contestAddress], references: [contestAddress], onDelete: NoAction, onUpdate: NoAction)
+  submittedVulnerabilities SubmittedVulnerability[]
 }
 
 model SubmittedVulnerability {
-  id                    Int                     @id @default(autoincrement())
-  contestAddress        String
-  name                  String
-  proofOfConcept        String
-  ownerAddress          String
-  FilteredVulnerability FilteredVulnerability[]
-  Contest               Contest                 @relation(fields: [contestAddress], references: [contestAddress], onDelete: NoAction, onUpdate: NoAction)
+  id                      Int                    @id @default(autoincrement())
+  contestAddress          String
+  name                    String
+  proofOfConcept          String
+  ownerAddress            String
+  filteredVulnerabilityId Int?
+  FilteredVulnerability   FilteredVulnerability? @relation(fields: [filteredVulnerabilityId], references: [id])
+  Contest                 Contest                @relation(fields: [contestAddress], references: [contestAddress], onDelete: NoAction, onUpdate: NoAction)
 }

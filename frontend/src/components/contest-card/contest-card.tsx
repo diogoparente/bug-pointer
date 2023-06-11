@@ -17,7 +17,7 @@ const ContestCard = ({ contest, mode }: ContestCardProps) => (
       >
         {contest.name}
       </SubHeader>
-      <SubHeader className="text-right">{contest.prize}</SubHeader>
+      <SubHeader className="text-right">{contest.prize + " USDC"}</SubHeader>
     </div>
     <Paragraph>{contest.overview.length > 200 ? contest.overview.slice(0, 200) + "..." : contest.overview}</Paragraph>
     <div className="flex w-full flex-row items-center justify-between">

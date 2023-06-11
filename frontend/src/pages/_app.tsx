@@ -6,6 +6,15 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { polygon } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Navbar } from "@/components/navbar";
+import { Source_Code_Pro } from "next/font/google";
+
+const source_code_pro = Source_Code_Pro({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-source-code-pro",
+});
 
 const { chains, provider } = configureChains(
   [polygon],
@@ -23,11 +32,18 @@ const wagmiClient = createClient({
   provider,
 });
 
+const queryClient = new QueryClient();
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <div className={`${source_code_pro.variable} font-sourceCodePro text-white`}>
+            <Navbar />
+            <Component {...pageProps} />
+          </div>
+        </QueryClientProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

@@ -1,4 +1,6 @@
 // eslint-disable-next-line no-undef
+const tailwind = require("./tailwind.config");
+
 module.exports = {
   extends: [
     "eslint:recommended",
@@ -30,6 +32,13 @@ module.exports = {
         ignoreUrls: true,
         ignoreRegExpLiterals: true,
         ignoreStrings: true,
+      },
+    ],
+    "tailwindcss/classnames-order": "off",
+    "tailwindcss/no-custom-classname": [
+      "error",
+      {
+        config: tailwind,
       },
     ],
   },

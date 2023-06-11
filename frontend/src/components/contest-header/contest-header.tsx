@@ -18,7 +18,7 @@ const ContestHeader = ({ contest, mode }: ContestHeaderProps) => (
         <DateDisplay date={contest.closeAt} label="End Date" />
       </div>
     </div>
-    <SubHeader>{`Total Prize: ${contest.prize}`}</SubHeader>
+    <SubHeader>{`Total Prize: ${contest.prize} USDC`}</SubHeader>
   </>
 );
 
