@@ -17,7 +17,7 @@ export default function Home() {
         <Header className="px-32 text-center text-white">A sybil-resistant bug bounty platform</Header>
         <NftCard />
         <div className="flex flex-row items-center justify-center gap-16">
-          <CustomLink type="button" color="purple" className="text-xl" size="large" href={"/create-contest"}>
+          <CustomLink type="button" color="purple" className="text-xl" size="large" href={"/my-contests"}>
             I&#39;m a Sponsor
           </CustomLink>
           <CustomLink
